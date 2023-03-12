@@ -1,0 +1,63 @@
+.sign_menu{
+    font-family:Merriweather Sans;
+    display: block;
+    width: 100%;
+    height:100%;
+    padding: 0% 10% 0% 10%;
+    
+    label{
+        text-align: left;
+        color: white;
+        font-size: 1.25em;
+        width: 40%;
+        height: 15%;
+    }
+    input{
+        padding-left: 10px;
+        border:3px solid gray;
+        border-radius:25px ;
+        font-size: 1em;
+        width: 60%;
+        height: 15%;
+    }
+    button{
+        
+        margin-top: 1%;
+        color: white;
+        background-color: #970202;
+        border: 5px solid #5a0303;
+        border-radius: 50px;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        font-family:Merriweather Sans;
+        font-size: 1em;
+        height: 15%;
+        width: 25%;
+    
+        &:hover{
+            cursor: pointer;
+            background-color: rgba(77, 0, 0, 0.8);
+        }
+    }
+    }
+.naglowek{
+    color:white;
+    font-size: 2.5em;
+    margin: 0% 0% 0% 0%;
+    padding-top: 5%;
+    height: 15%;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Merriweather Sans";
+    text-transform: uppercase;
+    font-size: 2em;
+}
+#signin_window{
+    padding: 30% 0% 30% 0%;
+    height: 85%;
+    label{width: 30%;}
+    input{width: 70%;}
+    button{margin: 15px;}
+}

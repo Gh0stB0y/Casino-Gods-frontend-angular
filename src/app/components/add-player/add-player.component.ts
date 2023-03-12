@@ -6,7 +6,7 @@ import { PlayersServicesService } from 'src/app/services/players-services.servic
 @Component({
   selector: 'app-add-player',
   templateUrl: './add-player.component.html',
-  styleUrls: ['./add-player.component.css']
+  styleUrls: ['./add-player.component.scss']
 })
 export class AddPlayerComponent implements OnInit {
   addPlayerRequest: Player={

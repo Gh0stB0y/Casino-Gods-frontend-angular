@@ -1,5 +1,3 @@
-
-<router-outlet></router-outlet>
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -14,8 +12,11 @@
 <body>
 
  <div id="wrapper"></div>
-
-  <div class="menu">
+  <div class="wklad">
+  <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+  </div>
+  <!-- <div class="menu">
     <h1 [style.display]="welcome_disp" class="naglowek" >Casino Gods Online</h1>
     <div [style.display]="login_list_disp" *ngIf="login_menu" class="list">
       
@@ -84,7 +85,7 @@
       <input type="text" placeholder="Enter your e-mail address" name="recovery_mail" required>
       <div style="width: 100%;"><button type="submit">Submit</button></div>
     </div>
-  </div>
+  </div> -->
 
  
 </body>
