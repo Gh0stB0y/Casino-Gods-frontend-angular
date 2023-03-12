@@ -7,9 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'GUI_APP';
-  sign_up_error:string[]=["Username is already in use","E-mail address is already in use","E-mail address is incorrect","User is younger than 18 years old",
-  "Password does not contain a large letter", "Password does not contain a small letter","Password does not contain a number","Password does not contain a special character",
-  "Password is not 8-letter-long"];
+
   sign_in_error:string[]=["Username not found","Incorrect password"];
   login_menu:boolean=true;
   sign_up_menu:boolean=false;
@@ -19,9 +17,9 @@ export class AppComponent {
   signin_list_disp="none";
   forgot_pass_disp="none";
   welcome_disp="flex";
-  error_info=this.sign_up_error[1];
+
   //
-  signUp(){
+/*   signUp(){
     this.login_list_disp="none";
     this.signup_list_disp="block";
     this.welcome_disp="none";
@@ -43,5 +41,5 @@ export class AppComponent {
   forgot(){
     this.signin_list_disp="none";
     this.forgot_pass_disp="block";
-  }
+  } */
 }

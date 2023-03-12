@@ -5,4 +5,5 @@ export interface Player{
     password: string;
     bankroll: number;
     profit:number;
+    birthdate:string;
 }

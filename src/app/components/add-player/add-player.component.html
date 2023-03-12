@@ -4,25 +4,33 @@
   <div id="signup_window">
     <form id="form" #form="ngForm" (ngSubmit)="addPlayer()">
     <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required [(ngModel)]="addPlayerRequest.username">
+    <input type="text" placeholder="Enter Username" name="uname"  required [(ngModel)]="addPlayerRequest.username">
     <label for="email"><b>E-mail</b></label>
     <input type="text" placeholder="Enter e-mail address" name="email" required required [(ngModel)]="addPlayerRequest.email">
     <label for="birth_date"><b>Date of birth</b></label>
-    <input type="date" placeholder="DD-MM-YYYY" name="birth_date" required>
+    <input type="date" placeholder="DD-MM-YYYY" name="birth_date" required [(ngModel)]="addPlayerRequest.birthdate">
     <label for="psw"><b>Password</b></label>
-    <input type="text" placeholder="Enter password" name="psw" required required [(ngModel)]="addPlayerRequest.password">
+    <input type="password" placeholder="Enter password"name="psw" required [(ngModel)]="addPlayerRequest.password">
     <label for="psw_conf"><b>Confirm password</b></label>
-    <input type="text" placeholder="Confirm Password" name="psw_conf" required>
-    <p  id="info_paragraph"><strong>some error asdasdafqefa sdfqwqwdqw </strong></p>
+    <input type="password" placeholder="Confirm Password" name="psw_conf" required [(ngModel)]="passConfValue">
+    <p id="info_paragraph"><strong>{{currentError}}</strong></p>
     <button type="submit">Submit</button>
-    <p>Password has to:</p>
-    <ul>
+    <div id="requirements">
+    <p style="display: inline-block;">Password has to:</p>
+    <p style="display: inline-block;">Username has to:</p>
+    </div>
+    <div id="requirements" style="margin-top: 2%;">
+    <ul style="display: inline-block;width: 50%;">
       <li>contain large letter</li>
       <li>contain small letter</li>
       <li>contain a number</li>
       <li>contain a special character</li>
       <li>be at least 8 characters long</li>
     </ul>  
+    <ul style="display: inline-block;width: 50%;float:right;">
+      <li>be at least 4 characters long</li>
+    </ul>  
+    </div>
     </form>
   </div>
 

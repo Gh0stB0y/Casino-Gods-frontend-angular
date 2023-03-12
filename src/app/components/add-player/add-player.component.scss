@@ -58,18 +58,33 @@ button{
 #signup_window{
     padding: 5% 0% 5% 0%;
     height: 85%;
-    label{width: 45%;height:11%;text-align: left;}
-    input{width: 55%;height:11%}
-    button{height: 10%;}
-    ul{text-align: left;color:white; font-size: 0.75em;padding-left: 5px;}
-    p{text-align: left;color:white;}
+    label{width: 45%;height:9%;text-align: left;}
+    input{width: 55%;height:9%}
+    button{height: 10%;margin: 3%;}
+    ul{text-align: left;color:white; font-size: 0.75em;padding-left: 5px;width: 50%;}
+    p{text-align: left;color:white;margin: 0px;width: 50%;margin:0px;border: 0px;}
     #info_paragraph{
+        margin: 1%;
         text-align: left;
         font-size: 1em;
         color:red;
+        width: 100%;
     }
+
+    
 }
 #form{
 
-    height: 85%;
+    height: 100%;
+}
+
+#psw{
+    -webkit-text-security: disc;
+-moz-text-security: disc;
+text-security: disc;
+}
+
+#requirements{
+    p{width: 50%;margin-right:0px;border: 0px;}
+
 }
