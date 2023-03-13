@@ -2,20 +2,18 @@ import { Component, OnInit} from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Player } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
-
 @Component({
   selector: 'app-add-player',
   templateUrl: './add-player.component.html',
   styleUrls: ['./add-player.component.scss']
-}
-)
+})
 
 export class AddPlayerComponent implements OnInit {
 
   passConfValue:string="";
   errorArray:boolean[]=[false,false,false,false,false,false,false,false,false];
   errorArrayVal:string[]=["Username too short","invalid email","User is not an adult","Birthdate not fulfilled","Password does not contain lowercase letter",
-  "Password does not contain upercase letter","Password does not contain number","Password does not contain special character","Password too short",
+  "Password does not contain upercase letter","Password does not contain a number","Password does not contain a special character","Password too short",
   "Password and Confirm password do not match"];
   currentError:string="";
   allGood:boolean=false;
@@ -69,6 +67,8 @@ export class AddPlayerComponent implements OnInit {
   }
   checkPassword():boolean[]{
     let arr: boolean[] = [false,false,false,false,false]; 
+    this.allGood=true;
+
     arr[0]=!this.containsLowercase(this.addPlayerRequest.password);
     arr[1]=!this.containsUppercase(this.addPlayerRequest.password);
     arr[2]=!this.containsNumber(this.addPlayerRequest.password);
@@ -91,23 +91,31 @@ export class AddPlayerComponent implements OnInit {
 
     let out:string="";
     for(let n = 0; n < this.errorArray.length; n++){out+=(this.errorArray[n]+" ");}
+
     console.log(out);
     for(let n = 0; n < this.errorArray.length; n++){
      if(this.errorArray[n]===true){
       this.currentError=this.errorArrayVal[n];
+      this.allGood=false;
       n=this.errorArray.length;
      }
      else {this.currentError="";this.allGood=true;}
     }
 
     if(this.allGood===true){
-    console.log(this.addPlayerRequest)
     this.playerService.addPlayer(this.addPlayerRequest)
-    .subscribe({
+    .subscribe({//jak wszystko bedzie ok
       next: (add_player)=>{
         console.log(add_player);
         this.router.navigate(['']);
+      },
+      error:(message)=>{//jesli bedzie jakis blad
+        if(message.status===400)this.currentError=message.error;
+        else if(message.status===0)this.currentError="Invalid connection, try again later";
+        else console.log(message);
+        console.log(message);
       }
+      
     })
     }
     else{console.log("blad danych");}

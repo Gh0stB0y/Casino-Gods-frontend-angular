@@ -10,7 +10,6 @@ import { PlayersServicesService } from 'src/app/services/players-services.servic
 export class PlayersListComponent implements OnInit {
 players: Player[]=[];
 
-
 constructor(private playersService: PlayersServicesService) {}
 
 ngOnInit(): void{
@@ -23,13 +22,8 @@ ngOnInit(): void{
     },
     error:(get_response)=>{
       console.log(get_response);
-    }
+    },
   })
 
 }
-
-
-
-
-
 }

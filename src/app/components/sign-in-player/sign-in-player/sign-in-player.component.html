@@ -1,18 +1,21 @@
 <div class="sign_menu" id="sign_in_menu">
  
-
     <h3 class="naglowek">Enter login credentials</h3>
 
     <div id="signin_window">
 
+      <form id="form" #form="ngForm" (ngSubmit)="signIn()">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="uname" required [(ngModel)]="signInRequest.username">
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-          
-      <div style="width: 100%;"><button type="submit">Login</button></div>
+      <input type="password" placeholder="Enter Password" name="psw" required [(ngModel)]="signInRequest.password">
       
+      <div style="width: 100%;"><button type="submit">Login</button></div>
+      <p id="info_paragraph"><strong>{{currentError}}</strong></p>   
+      </form>
       <div style="width: 100%;"><button style="width: 75%;" (click)="forgot()">I forgot my password / username</button></div>
+      
+    
     </div>
   
 </div>
