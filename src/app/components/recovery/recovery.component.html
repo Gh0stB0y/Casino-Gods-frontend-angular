@@ -1,6 +1,9 @@
 <div class="sign_menu" id="forgot_pass_menu">
+  <form id="form" #form="ngForm" (ngSubmit)="recovery()">
     <p>Type in your e-mail address</p>
-   
-    <input type="text" placeholder="Enter your e-mail address" name="recovery_mail" required>
+    <input type="text" placeholder="Enter your e-mail address" name="recovery_mail" required [(ngModel)]="recoveryRequest">
     <div style="width: 100%;"><button type="submit">Submit</button></div>
+    <p id="info_paragraph"><strong>{{currentError}}</strong></p>   
+    </form>
+
   </div>

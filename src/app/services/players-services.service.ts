@@ -23,4 +23,9 @@ export class PlayersServicesService {
     signInRequest.id='00000000-0000-0000-0000-000000000000';
     return this.http.post<Player>(this.baseApiUrl+'/api/players/login',signInRequest);
   }
+  recoveryPlayer(recoveryRequest:string,recoveryPlayer:Player):Observable<Player>{
+    recoveryPlayer.email=recoveryRequest;
+    recoveryPlayer.id='00000000-0000-0000-0000-000000000000';
+    return this.http.post<Player>(this.baseApiUrl+'/api/players/recovery',recoveryPlayer);
+  }
 }

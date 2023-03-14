@@ -28,8 +28,7 @@ forgot(){location.href="recovery"}
     this.playerService.signInPlayer(this.signInRequest)
     .subscribe({//jak wszystko bedzie ok
       next: (sign_player)=>{
-        /* console.log(sign_player); */
-        /* this.router.navigate(['']); */
+        this.router.navigate(['playerPanel']);
       },
       error:(message)=>{//jesli bedzie jakis blad
         if(message.status===400)this.currentError=message.error;

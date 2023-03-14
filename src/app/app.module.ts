@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginMenuComponent } from './components/login-menu/login-menu/login-menu.component';
 import { SignInPlayerComponent } from './components/sign-in-player/sign-in-player/sign-in-player.component';
 import { RecoveryComponent } from './components/recovery/recovery.component';
+import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { RecoveryComponent } from './components/recovery/recovery.component';
     LoginMenuComponent,
     SignInPlayerComponent,
     RecoveryComponent,
+    PlayerMenuComponent,
   ],
   imports: [
     BrowserModule,
