@@ -7,3 +7,13 @@ export interface Player{
     profit:number;
     birthdate:string;
 }
+
+export interface PlayerStats{
+
+}
+export interface PlayerSignUp{
+    username: string;
+    email: string;
+    birthdate:string;
+    password: string;
+}

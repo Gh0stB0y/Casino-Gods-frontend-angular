@@ -1,7 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { Player } from 'src/app/models/player.model';
+import { CookieService } from 'ngx-cookie-service/public-api';
+import { PlayerSignUp } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
+import {AppModule} from 'src/app/app.module'
 @Component({
   selector: 'app-add-player',
   templateUrl: './add-player.component.html',
@@ -18,17 +20,16 @@ export class AddPlayerComponent implements OnInit {
   currentError:string="";
   allGood:boolean=false;
 
-  addPlayerRequest: Player={
-  id: '0',
+  addPlayerRequest: PlayerSignUp={
   username: '',
   email: '',
   password: '',
-  bankroll: 5000,
-  profit:0,
   birthdate:""
   };
-  constructor(private playerService: PlayersServicesService, private router:Router) {}
-  ngOnInit(): void {}
+  constructor(private playerService: PlayersServicesService, private router:Router,  private cookie:AppModule) {}
+  ngOnInit(): void {
+    this.cookie.cookieSet();
+  }
 
   containsUppercase(str:string) {
     return Boolean(str.match(/[A-Z]/));

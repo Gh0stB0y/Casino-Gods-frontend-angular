@@ -11,7 +11,7 @@ import { LoginMenuComponent } from './components/login-menu/login-menu/login-men
 import { SignInPlayerComponent } from './components/sign-in-player/sign-in-player/sign-in-player.component';
 import { RecoveryComponent } from './components/recovery/recovery.component';
 import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
-
+import {CookieService} from 'ngx-cookie-service'
 
 @NgModule({
   declarations: [
@@ -29,7 +29,16 @@ import { PlayerMenuComponent } from './components/player-menu/player-menu.compon
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private cookie:CookieService){}
+
+
+    public cookieSet(){
+      const dateNow = new Date();
+      dateNow.setMinutes(dateNow.getMinutes() + 5);
+      this.cookie.set("JEBAC","DISA",{ expires: dateNow, path: '/' });
+    }
+}
