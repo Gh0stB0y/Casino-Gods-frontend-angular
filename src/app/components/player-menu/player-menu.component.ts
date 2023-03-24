@@ -9,7 +9,6 @@ import { PlayersServicesService } from 'src/app/services/players-services.servic
 })
 export class PlayerMenuComponent implements OnInit {
 
-  
   unameToDisplay:string="";
   bankrollToDisplay:number=0;
   constructor(private playersService: PlayersServicesService) {
@@ -19,6 +18,7 @@ export class PlayerMenuComponent implements OnInit {
   }
   logOut(){
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
+    console.log(localStorage.getItem('jwt'));
   }
   statistics(){
 

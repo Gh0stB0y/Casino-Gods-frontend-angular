@@ -90,10 +90,10 @@ export class AddPlayerComponent implements OnInit {
       /* this.errorArray= this.errorArray.concat(this.checkPassword()); */
     if(this.passConfValue!=this.addPlayerRequest.password) this.errorArray[9]=true; else this.errorArray[8]=false;
 
-    let out:string="";
+    /* let out:string="";
     for(let n = 0; n < this.errorArray.length; n++){out+=(this.errorArray[n]+" ");}
+    console.log(out); */
 
-    console.log(out);
     for(let n = 0; n < this.errorArray.length; n++){
      if(this.errorArray[n]===true){
       this.currentError=this.errorArrayVal[n];
@@ -107,7 +107,7 @@ export class AddPlayerComponent implements OnInit {
     this.playerService.addPlayer(this.addPlayerRequest)
     .subscribe({//jak wszystko bedzie ok
       next: (add_player)=>{
-        console.log(add_player);
+        console.log(add_player.username);
         this.router.navigate(['']);
       },
       error:(message)=>{//jesli bedzie jakis blad

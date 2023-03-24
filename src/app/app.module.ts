@@ -35,7 +35,6 @@ import {CookieService} from 'ngx-cookie-service'
 export class AppModule {
   constructor(private cookie:CookieService){}
 
-
     public cookieSet(){
       const dateNow = new Date();
       dateNow.setMinutes(dateNow.getMinutes() + 5);

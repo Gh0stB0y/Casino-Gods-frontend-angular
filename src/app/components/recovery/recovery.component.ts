@@ -23,7 +23,7 @@ export class RecoveryComponent implements OnInit{
     };
   recovery(){
 
-    this.playerService.recoveryPlayer(this.recoveryRequest,this.recoveryPlayer)
+    this.playerService.recoveryPlayer(this.recoveryRequest)
     .subscribe({//jak wszystko bedzie ok
       next: (message)=>{
        console.log(message);

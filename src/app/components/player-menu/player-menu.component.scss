@@ -27,9 +27,10 @@
 }
 .playerInfo{
     height: 5%;
+    margin: 2.5%;
     color:white;
     display:flex;
-    width: 100%;
+    width: 95%;
     text-align: left;
     .info{
         width: 50%;
@@ -38,7 +39,7 @@
 }
 
 .list{
-    height: 95%;
+    height: 90%;
     //margin: 10% 20% 10% 20%;
     
     padding: 5% 20% 5% 20%;

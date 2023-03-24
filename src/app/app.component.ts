@@ -14,22 +14,15 @@ export class AppComponent {
   login_menu:boolean=true;
   sign_up_menu:boolean=false;
   sign_in_menu:boolean=false;
+  loggedUser:boolean=false;
   login_list_disp="block";
   signup_list_disp="none";
   signin_list_disp="none";
   forgot_pass_disp="none";
   welcome_disp="flex";
+  
+
   constructor(private cookieService:CookieService){
- 
   }
 
-  setCookie(name:string,value:string){
-    this.cookieService.set(name,value);
-  }
-  deleteCookie(name:string){
-    this.cookieService.delete(name);
-  }
-  ngOnInit(): void {
-  this.all_cookies=this.cookieService.getAll();  
-  }
 }

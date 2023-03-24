@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
+import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Player, PlayerSignUp } from '../models/player.model';
+import { Player, PlayerSignIn, PlayerSignUp } from '../models/player.model';
 
 
 @Injectable({
@@ -18,14 +19,11 @@ export class PlayersServicesService {
   addPlayer(addPlayerRequest:PlayerSignUp):Observable<PlayerSignUp>{
     return this.http.post<PlayerSignUp>(this.baseApiUrl+'/api/players',addPlayerRequest);
   }
-  signInPlayer(signInRequest:Player):Observable<Player>{
-    signInRequest.id='00000000-0000-0000-0000-000000000000';
-    return this.http.post<Player>(this.baseApiUrl+'/api/players/login',signInRequest);
+  signInPlayer(signInRequest:PlayerSignIn):Observable<string>{
+    return this.http.post<string>(this.baseApiUrl+'/api/players/login',signInRequest);
     /* DOPISAC FUNKCJE SPRAWDZAJACA CZY KTOS JEST ZALOGOWANY NA TYM KONCIE NA INNYM URZADZENIU I CZY KTOS JEST ZALOGOWANY Z TEGO URZADZENIA */ 
   }
-  recoveryPlayer(recoveryRequest:string,recoveryPlayer:Player):Observable<Player>{
-    recoveryPlayer.email=recoveryRequest;
-    recoveryPlayer.id='00000000-0000-0000-0000-000000000000';
-    return this.http.post<Player>(this.baseApiUrl+'/api/players/recovery',recoveryPlayer);
+  recoveryPlayer(recoveryRequest:string):Observable<string>{
+    return this.http.post<string>(this.baseApiUrl+'/api/players/recovery',recoveryRequest);
   }
 }

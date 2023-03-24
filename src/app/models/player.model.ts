@@ -7,7 +7,6 @@ export interface Player{
     profit:number;
     birthdate:string;
 }
-
 export interface PlayerStats{
 
 }
@@ -17,3 +16,9 @@ export interface PlayerSignUp{
     birthdate:string;
     password: string;
 }
+export interface PlayerSignIn{
+    username: string;
+    password: string;
+}
+
+
