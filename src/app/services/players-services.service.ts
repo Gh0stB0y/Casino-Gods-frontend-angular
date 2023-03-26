@@ -20,7 +20,7 @@ export class PlayersServicesService {
     return this.http.post<PlayerSignUp>(this.baseApiUrl+'/api/players',addPlayerRequest);
   }
   signInPlayer(signInRequest:PlayerSignIn):Observable<string>{
-    return this.http.post<string>(this.baseApiUrl+'/api/players/login',signInRequest);
+    return this.http.put(this.baseApiUrl+'/api/players/login',signInRequest,{responseType:"text"});
     /* DOPISAC FUNKCJE SPRAWDZAJACA CZY KTOS JEST ZALOGOWANY NA TYM KONCIE NA INNYM URZADZENIU I CZY KTOS JEST ZALOGOWANY Z TEGO URZADZENIA */ 
   }
   recoveryPlayer(recoveryRequest:string):Observable<string>{
