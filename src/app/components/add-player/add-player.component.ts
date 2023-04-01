@@ -28,7 +28,6 @@ export class AddPlayerComponent implements OnInit {
   };
   constructor(private playerService: PlayersServicesService, private router:Router,  private cookie:AppModule) {}
   ngOnInit(): void {
-    this.cookie.cookieSet();
   }
 
   containsUppercase(str:string) {

@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { Player } from 'src/app/models/player.model';
+import { EmailRec, Player } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
 @Component({
   selector: 'app-recovery',
@@ -9,18 +9,12 @@ import { PlayersServicesService } from 'src/app/services/players-services.servic
 })
 export class RecoveryComponent implements OnInit{
   ngOnInit(): void {}
-  recoveryRequest: string='';
+  recoveryRequest: EmailRec={
+    emailRec:""
+  };
   currentError:string="";
   constructor(private playerService: PlayersServicesService, private router:Router){}
-  recoveryPlayer: Player={
-    id: '0',
-    username: '',
-    email: '',
-    password: '',
-    bankroll: 0,
-    profit:0,
-    birthdate:'1970-01-01T22:12:41.685Z'
-    };
+
   recovery(){
 
     this.playerService.recoveryPlayer(this.recoveryRequest)

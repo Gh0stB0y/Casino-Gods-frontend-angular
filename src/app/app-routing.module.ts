@@ -8,6 +8,7 @@ import { RecoveryComponent } from './components/recovery/recovery.component';
 import { SignInPlayerComponent } from './components/sign-in-player/sign-in-player/sign-in-player.component';
 
 
+
 const routes: Routes = [
   {path:'',redirectTo: 'login',pathMatch:'full'},
   {path:'players',component:PlayersListComponent},
@@ -15,11 +16,14 @@ const routes: Routes = [
   {path:'login',component:LoginMenuComponent},
   {path:'signin',component:SignInPlayerComponent},
   {path:'recovery',component:RecoveryComponent},
-  {path:'playerPanel',component:PlayerMenuComponent},
+  {path:'playerMenu',component:PlayerMenuComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+  
+ 
+}

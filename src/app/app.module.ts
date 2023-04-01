@@ -12,7 +12,11 @@ import { SignInPlayerComponent } from './components/sign-in-player/sign-in-playe
 import { RecoveryComponent } from './components/recovery/recovery.component';
 import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
 import {CookieService} from 'ngx-cookie-service'
-
+import {jwt} from 'src/app/models/player.model'
+import { Route, Router } from '@angular/router';
+import { PlayersServicesService } from 'src/app/services/players-services.service';
+import { take } from 'rxjs/operators';
+import { isObservable, Observable } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,11 +37,43 @@ import {CookieService} from 'ngx-cookie-service'
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private cookie:CookieService){}
+  jwt_test:any="";
+  jwtObj:jwt={
+    jwtString:""
+  };
+  currentError:string="";
+  jwtOk: boolean = true;
+  jwtBuffer:string="";
+  constructor(private playersService: PlayersServicesService,private cookie:CookieService,private router:Router){}
 
-    public cookieSet(){
-      const dateNow = new Date();
-      dateNow.setMinutes(dateNow.getMinutes() + 5);
-      this.cookie.set("JEBAC","DISA",{ expires: dateNow, path: '/' });
+    checkJWT(normalcheck:boolean){    
+      this.jwt_test=localStorage.getItem("jwt");
+    if(this.jwt_test==null){
+      localStorage.clear();
+      if(normalcheck===true){this.router.navigate(['login']);}
+      else{}
     }
+    else{
+      console.log("JWT jest sczytane");
+      this.jwtObj.jwtString=this.jwt_test;
+      this.playersService.checkJWT(this.jwtObj)
+      .subscribe({
+        next: (sign_player)=>{  //jak wszystko bedzie ok      
+          localStorage.setItem('jwt', sign_player);          
+          if(normalcheck===true){}
+          else{this.router.navigate(['playerMenu']);}
+        },
+      error:(message)=>{//jesli bedzie jakis blad
+        
+        this.currentError=message.error;
+        console.log(message);
+        localStorage.clear();
+        if(this.currentError== "JWT expired,log in again") console.log("user timed out,log in again");
+        
+        if(normalcheck===true){this.router.navigate(['login']);}
+        else{}
+      }
+      })
+    }
+  }
 }

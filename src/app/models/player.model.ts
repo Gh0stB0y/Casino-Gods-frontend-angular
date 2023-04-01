@@ -21,4 +21,15 @@ export interface PlayerSignIn{
     password: string;
 }
 
-
+export interface jwt{
+    jwtString: string;
+}
+export interface EmailRec{
+    emailRec: string;
+}
+export interface ActivePlayer{
+    username:string;
+    bankroll:number;
+    profit:number;
+    jwt: string;
+}
