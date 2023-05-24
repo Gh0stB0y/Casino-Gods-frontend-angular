@@ -17,7 +17,7 @@ export class PlayersServicesService {
     return this.http.get<Player[]>(this.baseApiUrl+'/api/Players');
   }
   addPlayer(addPlayerRequest:PlayerSignUp):Observable<PlayerSignUp>{
-    return this.http.post<PlayerSignUp>(this.baseApiUrl+'/api/Players',addPlayerRequest);
+    return this.http.post<PlayerSignUp>(this.baseApiUrl+'/api/Players/register',addPlayerRequest);
   }
   signInPlayer(signInRequest:PlayerSignIn):Observable<ActivePlayer>{
     return this.http.post<ActivePlayer>(this.baseApiUrl+'/api/Players/login',signInRequest);
