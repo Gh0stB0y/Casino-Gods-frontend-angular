@@ -76,3 +76,117 @@
         }
     }
     }
+    .table_data1{
+    height: 75%;
+    padding: 00% 0% 00% 0%;
+    margin: 0%;
+    
+    .btn{
+        margin:0% 0% 0% 0%;
+        width: 40%;
+        height:25%;
+    }
+    #btn1{
+        font-size: 1.5em;
+        list-style-type: none;
+        text-align: center;
+        color: white;
+        height: 100%;
+        width: 100%;
+        min-width: 50%;
+    
+        background-color: #970202;
+        border: 5px solid #5a0303;
+        border-radius: 50px;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        font-family:Merriweather Sans;
+    
+        &:hover{
+            cursor: pointer;
+            background-color: rgba(77, 0, 0, 0.8);
+        }
+    }
+    #tableDataDisplay{
+        margin: 0;
+        display: flex;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: break-word;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 2em;
+        font-family:Merriweather Sans;
+    }
+}
+.table_data2{
+    height:85%;
+    display: flex;
+    object-fit: fill;
+    margin: 0% 0% 0% 0%;
+    padding: 0% 0% 0% 0%;
+    width: 100%;
+    
+    img{
+        width: 100%;
+        height: 100%;       
+    }
+    #tableDataDisplay{
+        width: 60%;
+        height: 100%;
+    }
+    button{
+        font-size: 1.5em; 
+        width: 20%;
+        height: 100%;
+        padding: 20% 0% 20% 0%;
+        background-color:transparent;
+        border: none;
+    }
+    
+}
+
+#header{
+    width: 100%;
+    height: 15%;
+    margin: 0;
+        display: flex;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: break-word;
+        justify-content: center;
+        align-items:end;
+        color: white;
+        font-size: 2em;
+        font-family:Merriweather Sans;
+}
+.btnChoose{
+    margin:2.5% auto 2.5% auto ;
+    width: 40%;
+    height: 10%;
+}
+#btnChoose{
+
+    font-size: 1.5em;
+    list-style-type: none;
+    text-align: center;
+    color: white;
+    height: 100%;
+    width: 100%;
+    min-width: 50%;
+
+    background-color: #970202;
+    border: 5px solid #5a0303;
+    border-radius: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    font-family:Merriweather Sans;
+
+    &:hover{
+        cursor: pointer;
+        background-color: rgba(77, 0, 0, 0.8);
+    }
+}

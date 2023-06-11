@@ -1,12 +1,12 @@
 
 
-<div class="menu">
+  <div class="menu">
     <div class="playerInfo">
       <p class="info">User: {{unameToDisplay}}</p>
       <p class="info">Bankroll: {{bankrollToDisplay}}</p>  
       <p class="info">Session profit: {{profitToDipslay}}</p>  
     </div>
-    <div class="list">
+    <div *ngIf="mainMenu" class="list">
           
         <div class="btn">
         <button id="btn1" (click)="play()">Play</button>
@@ -17,7 +17,21 @@
         <div class="btn">
         <button id="btn3"(click)="logOut()">Log out</button>
         </div>        
-        </div>   
+    </div>   
+      
+      
+      <div *ngIf="!mainMenu" class="table_data1">
+        <p id="header">Choose a game</p>
+        <div class="table_data2">
+            <button><img src="assets\images\leftarrow.png" (click)="left()" alt="leftarrow"></button>
+            <p id="tableDataDisplay">{{Currentgame}}</p>          
+            <button><img src="assets\images\rightarrow.png" (click)="right()" alt="rightarrow"></button>
+        </div>  
+      </div>
+      <div *ngIf="!mainMenu" class="btnChoose">
+        <button id="btnChoose" (click)="ChooseGame()">Choose </button>
+      </div>
     
-</div>
+  </div>
+  
 <!-- (click)="signUp()" -->

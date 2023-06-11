@@ -34,8 +34,13 @@ export interface ActivePlayer{
     jwt: string;
 }
 export interface TableData{
-    gameNames:string;
-    tableNames:string[];
-    minBet:number[];
-    maxBet:number[];
+    jwt:string;
+    gameNames:string[];  
+}
+export interface LobbyDataInput{
+    jwt:string;
+    ChosenGame:string
+}
+export interface LobbyDataOutput{
+    jwt:string;
 }

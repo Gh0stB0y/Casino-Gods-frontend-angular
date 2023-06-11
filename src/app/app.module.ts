@@ -17,7 +17,7 @@ import { Route, Router } from '@angular/router';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
 import { take } from 'rxjs/operators';
 import { isObservable, Observable } from 'rxjs';
-import { PlayGameComponent } from './components/play-game/play-game/play-game.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { PlayGameComponent } from './components/play-game/play-game/play-game.co
     SignInPlayerComponent,
     RecoveryComponent,
     PlayerMenuComponent,
-    PlayGameComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -51,12 +51,12 @@ export class AppModule {
 
     async checkJWT(normalcheck:boolean):Promise<void>{    
       this.jwt_test=localStorage.getItem("jwt");
-    if(this.jwt_test==null){
+      if(this.jwt_test==null){
       localStorage.clear();
       if(normalcheck===true){this.router.navigate(['login']);}
       else{}
-    }
-    else{
+      }
+      else{
       console.log("JWT jest sczytane");
       this.jwtObj.jwtString=this.jwt_test;
       
