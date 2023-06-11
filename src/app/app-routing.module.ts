@@ -6,6 +6,7 @@ import { PlayerMenuComponent } from './components/player-menu/player-menu.compon
 import { PlayersListComponent } from './components/players/players-list/players-list.component';
 import { RecoveryComponent } from './components/recovery/recovery.component';
 import { SignInPlayerComponent } from './components/sign-in-player/sign-in-player/sign-in-player.component';
+import { PlayGameComponent } from './components/play-game/play-game/play-game.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:'signin',component:SignInPlayerComponent},
   {path:'recovery',component:RecoveryComponent},
   {path:'playerMenu',component:PlayerMenuComponent},
+  {path:'playGame',component:PlayGameComponent}
 ];
 
 @NgModule({

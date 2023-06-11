@@ -17,6 +17,8 @@ import { Route, Router } from '@angular/router';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
 import { take } from 'rxjs/operators';
 import { isObservable, Observable } from 'rxjs';
+import { PlayGameComponent } from './components/play-game/play-game/play-game.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,7 @@ import { isObservable, Observable } from 'rxjs';
     SignInPlayerComponent,
     RecoveryComponent,
     PlayerMenuComponent,
+    PlayGameComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ export class AppModule {
   jwtBuffer:string="";
   constructor(private playersService: PlayersServicesService,private cookie:CookieService,private router:Router){}
 
-    checkJWT(normalcheck:boolean){    
+    async checkJWT(normalcheck:boolean):Promise<void>{    
       this.jwt_test=localStorage.getItem("jwt");
     if(this.jwt_test==null){
       localStorage.clear();
@@ -56,24 +59,35 @@ export class AppModule {
     else{
       console.log("JWT jest sczytane");
       this.jwtObj.jwtString=this.jwt_test;
-      this.playersService.checkJWT(this.jwtObj)
-      .subscribe({
-        next: (sign_player)=>{  //jak wszystko bedzie ok      
-          localStorage.setItem('jwt', sign_player);          
-          if(normalcheck===true){}
-          else{this.router.navigate(['playerMenu']);}
-        },
-      error:(message)=>{//jesli bedzie jakis blad
+      
+      try {
+        const response = await new Promise<void>((resolve, reject) => {
+          this.playersService.checkJWT(this.jwtObj).subscribe({
+            next: (sign_player) => {
+              localStorage.setItem('jwt', sign_player);          
+              if(normalcheck===true){}
+              else{this.router.navigate(['playerMenu']);}
+              resolve(); // Resolve the Promise with the received data
+            },
+            error: (message) => {
+              console.log(message);
+              this.currentError=message.error;
+              console.log(message);
+              localStorage.clear();
+              if(this.currentError== "JWT expired,log in again") console.log("user timed out,log in again");
         
-        this.currentError=message.error;
-        console.log(message);
-        localStorage.clear();
-        if(this.currentError== "JWT expired,log in again") console.log("user timed out,log in again");
-        
-        if(normalcheck===true){this.router.navigate(['login']);}
-        else{}
+              if(normalcheck===true){this.router.navigate(['login']);}
+              else{}
+              reject(message); // Reject the Promise with the error
+            }
+          });
+        });     
       }
-      })
+      catch(error){
+      console.log(error);
+      localStorage.clear();
+      this.router.navigate(['login']);
+      }
     }
   }
 }

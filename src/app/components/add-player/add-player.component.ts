@@ -29,7 +29,6 @@ export class AddPlayerComponent implements OnInit {
   constructor(private playerService: PlayersServicesService, private router:Router,  private cookie:AppModule) {}
   ngOnInit(): void {
   }
-
   containsUppercase(str:string) {
     return Boolean(str.match(/[A-Z]/));
   }

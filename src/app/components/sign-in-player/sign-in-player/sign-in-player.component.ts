@@ -16,9 +16,9 @@ export class SignInPlayerComponent implements OnInit {
     };
     test:boolean=true;
 constructor(private playerService: PlayersServicesService, private router:Router,private appmodule:AppModule) {}
-ngOnInit(): void {
+async ngOnInit(): Promise<void> {
   /* this.test=this.appmodule.checkJWT();*/ 
-   this.appmodule.checkJWT(false);
+   await this.appmodule.checkJWT(false);
 }
 forgot(){location.href="recovery"}
 

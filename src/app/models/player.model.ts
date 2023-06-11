@@ -33,3 +33,9 @@ export interface ActivePlayer{
     profit:number;
     jwt: string;
 }
+export interface TableData{
+    gameNames:string;
+    tableNames:string[];
+    minBet:number[];
+    maxBet:number[];
+}

@@ -10,8 +10,8 @@ import { AppModule } from 'src/app/app.module';
 export class LoginMenuComponent implements OnInit {
   test:boolean=true;
   constructor(private playerService: PlayersServicesService, private router:Router,private appmodule:AppModule){}
-  ngOnInit(): void {
-    this.appmodule.checkJWT(false);
+  async ngOnInit(): Promise<void> {
+    await this.appmodule.checkJWT(false);
   }
   signUp(){
     location.href='players/add'

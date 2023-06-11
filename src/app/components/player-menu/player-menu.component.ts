@@ -22,8 +22,8 @@ export class PlayerMenuComponent implements OnInit {
   constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule) {
     /* funkcja sprawdzajaca czy ktos jest zalogowany na tym urzadzeniu. Jesli tak to zimportuj dane  */
   }
-  ngOnInit(): void {
-    this.appmodule.checkJWT(true);
+  async ngOnInit(): Promise<void> {
+    await this.appmodule.checkJWT(true);
   }
   logOut(){
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
@@ -34,11 +34,10 @@ export class PlayerMenuComponent implements OnInit {
     localStorage.clear();
     this.router.navigate(['login']);
     }
+    //
   }
-  statistics(){
-
-  }
-
+  statistics(){}
+  play(){this.router.navigate(['playGame']);}
 
 
   
