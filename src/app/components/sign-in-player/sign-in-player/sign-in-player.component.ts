@@ -31,6 +31,7 @@ signIn(){
         localStorage.setItem('bankroll', JSON.stringify(sign_player.bankroll));
         localStorage.setItem('profit',JSON.stringify(sign_player.profit));
         localStorage.setItem('jwt', sign_player.jwt);
+        localStorage.setItem('isLoggedIn',"true");
         this.router.navigate(['playerMenu']);
       },
       error:(message)=>{//jesli bedzie jakis blad      

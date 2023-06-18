@@ -1,3 +1,5 @@
+import {Input} from '@angular/core';
+import { count } from 'rxjs';
 export interface Player{
     id: string;
     username: string;
@@ -41,6 +43,18 @@ export interface LobbyDataInput{
     jwt:string;
     ChosenGame:string
 }
-export interface LobbyDataOutput{
+
+export interface LobbyTableData{
     jwt:string;
+    TableName:string;
+    MinBet:number;
+    MaxBet:number;
+    MasSeats:number;
+    SeatCount:number;
+}
+export interface ChatMessages{
+    text:string;
+    text2:string;
+    textColor:string;
+    text2Color:string;
 }

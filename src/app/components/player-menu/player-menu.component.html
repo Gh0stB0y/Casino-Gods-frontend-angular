@@ -1,12 +1,11 @@
-
-
-  <div class="menu">
-    <div class="playerInfo">
+  <div class="menu"[class.menu-lobby]="CurrentDisplay === 'Lobby'">
+    <div class="playerInfo"[class.playerInfo-lobby]="CurrentDisplay === 'Lobby'">
       <p class="info">User: {{unameToDisplay}}</p>
       <p class="info">Bankroll: {{bankrollToDisplay}}</p>  
       <p class="info">Session profit: {{profitToDipslay}}</p>  
     </div>
-    <div *ngIf="mainMenu" class="list">
+    
+    <div *ngIf="CurrentDisplay==='MainMenu' "class="list">
           
         <div class="btn">
         <button id="btn1" (click)="play()">Play</button>
@@ -19,8 +18,7 @@
         </div>        
     </div>   
       
-      
-      <div *ngIf="!mainMenu" class="table_data1">
+    <div *ngIf="CurrentDisplay==='TableChoose' " class="table_data1">
         <p id="header">Choose a game</p>
         <div class="table_data2">
             <button><img src="assets\images\leftarrow.png" (click)="left()" alt="leftarrow"></button>
@@ -28,9 +26,24 @@
             <button><img src="assets\images\rightarrow.png" (click)="right()" alt="rightarrow"></button>
         </div>  
       </div>
-      <div *ngIf="!mainMenu" class="btnChoose">
-        <button id="btnChoose" (click)="ChooseGame()">Choose </button>
+    <div *ngIf="CurrentDisplay==='TableChoose' " class="btnChoose">
+        <button id="btnChoose" (click)="ChooseGame(Currentgame)">Choose </button>
+        <button id="btnChoose" (click)="GoBack()">Return </button>
+    </div>
+
+    <div *ngIf="CurrentDisplay==='Lobby'" class="chat">
+      <div class="chatMessages" #chatMessages>
+        <div *ngFor="let message of messages" class="message">
+          <span [style.color]="message.textColor">{{ message.text }}</span>
+          <span [style.color]="message.text2Color">: {{ message.text2 }}</span>
+        </div>
       </div>
+      <div class="chatInput">
+        <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message...">
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+    
     
   </div>
   

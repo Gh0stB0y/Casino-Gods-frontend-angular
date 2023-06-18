@@ -20,9 +20,13 @@ export class AppComponent {
   signin_list_disp="none";
   forgot_pass_disp="none";
   welcome_disp="flex";
-  
+
+  WideWrapper:boolean=false;
 
   constructor(private cookieService:CookieService){
+  }
+  ToggleWrapperWidth(){
+  this.WideWrapper=!this.WideWrapper;
   }
 
 }

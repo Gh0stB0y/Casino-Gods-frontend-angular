@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ViewChild, ElementRef,Input, OnInit,OnDestroy,OnChanges, SimpleChanges } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { jwt, LobbyDataInput, Player,TableData } from 'src/app/models/player.model';
+import { ChatMessages, jwt, LobbyDataInput, Player,TableData } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { AppModule } from 'src/app/app.module';
+import { AppComponent } from 'src/app/app.component';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-player-menu',
   templateUrl: './player-menu.component.html',
   styleUrls: ['./player-menu.component.scss']
 })
-export class PlayerMenuComponent implements OnInit {
-
-  mainMenu:boolean=true;
-  Currentgame:string="";
+export class PlayerMenuComponent implements OnInit,OnDestroy{
+  
+  CurrentDisplay:string="MainMenu";
+  Currentgame:string="Loading, please wait...";
   currentGameIndex:number=0;
   gamesList:string[]=[];
   lobbyData: LobbyDataInput={
     jwt:"",
     ChosenGame:""
     };
-
   unameToDisplay:any=localStorage.getItem("username");
   bankrollToDisplay:any=localStorage.getItem("bankroll");
   profitToDipslay:any=localStorage.getItem("profit");
@@ -31,8 +32,15 @@ export class PlayerMenuComponent implements OnInit {
   };
   currentError:string="";
   jwtStorage:any="";
-  constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService) {
+  messages:ChatMessages[]=[];
+  newMessage: string = "";
+  newAuthor:string="";
+  
+  @ViewChild('chatMessages') chatMessagesRef!: ElementRef;
+  constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
+              private appComponent:AppComponent) {
     /* funkcja sprawdzajaca czy ktos jest zalogowany na tym urzadzeniu. Jesli tak to zimportuj dane  */
+    this.messages=[];
   }
   async ngOnInit(): Promise<void> {
     //await this.appmodule.checkJWT(true);
@@ -70,8 +78,14 @@ export class PlayerMenuComponent implements OnInit {
           this.router.navigate(['login']);
         }
       }
-
+      
   }
+  ngOnDestroy(): void {
+    let Author = localStorage.getItem("username");
+    if(Author)this.SignalRService.QuitLobbyListener(this.Currentgame,Author.toString());
+    this.SignalRService.Disconnect(this.Currentgame);
+  }
+  
   logOut(){
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
     this.jwtStorage=localStorage.getItem("jwt");
@@ -85,8 +99,8 @@ export class PlayerMenuComponent implements OnInit {
   }
   statistics(){}
   play(){
-    this.mainMenu=false;
-    //this.router.navigate(['playGame']);
+    this.CurrentDisplay="TableChoose";
+    
   }
   left(){
     if(this.currentGameIndex===0){
@@ -99,7 +113,6 @@ export class PlayerMenuComponent implements OnInit {
       this.Currentgame=this.gamesList[this.currentGameIndex];
     }
   }
-
   right(){
   if(this.currentGameIndex===this.gamesList.length-1){
     this.currentGameIndex=0;
@@ -113,21 +126,26 @@ export class PlayerMenuComponent implements OnInit {
 
   }
   }
-  ChooseGame(){
-
-    this.SignalRService.startConnection();
-
-    // this.playersService.EnterLobby(this.lobbyData).subscribe(
-    //   {next:()=>{
-    //     this.router.navigate(['Lobby']);
-    //   }      
-    //   ,
-    //   error:(message:any)=>{
-    //     console.log(message);
-    //     localStorage.clear();
-    //     this.router.navigate(['login']);
-    //   }
-    //   }
-    // )
+  ChooseGame(gameType:string){
+    this.CurrentDisplay="Lobby";
+    this.appComponent.ToggleWrapperWidth();
+    let Author = localStorage.getItem("username");
+    if(Author)this.SignalRService.startConnection(gameType,this.messages,Author.toString());
+    this.Currentgame=gameType;
+  }
+  GoBack(){
+    this.CurrentDisplay="MainMenu";
+  }
+  sendMessage() {
+    if (this.newMessage.trim() !== '') {
+      let Author = localStorage.getItem("username");
+      if(Author)this.SignalRService.SendChatMessage(this.Currentgame,Author.toString(),this.newMessage);
+      this.scrollToBottom();
+    }
+  }
+  private scrollToBottom() {
+    this.newMessage = '';
+    const chatMessagesEl = this.chatMessagesRef.nativeElement;
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
   }
 }

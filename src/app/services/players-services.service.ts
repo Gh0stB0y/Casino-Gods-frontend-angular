@@ -3,7 +3,7 @@ import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {ActivePlayer,EmailRec, jwt,LobbyDataInput,LobbyDataOutput,Player, PlayerSignIn, PlayerSignUp,TableData } from '../models/player.model';
+import {ActivePlayer,EmailRec, jwt,Player, PlayerSignIn, PlayerSignUp,TableData } from '../models/player.model';
 
 
 @Injectable({
@@ -39,8 +39,4 @@ export class PlayersServicesService {
   playerMenu(jwt:jwt): Observable<TableData> {
     return this.http.post<TableData>(this.baseApiUrl + '/api/Players/TablesData',jwt);
   }
-  EnterLobby(lobbyData:LobbyDataInput):Observable<LobbyDataOutput>{
-    return this.http.post<LobbyDataOutput>(this.baseApiUrl + '/api/Players/TablesData',lobbyData)
-  }
-
 }
