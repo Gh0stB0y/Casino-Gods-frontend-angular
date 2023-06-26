@@ -220,11 +220,15 @@
 }
 
 .chat{
+
+    display: block;
+    justify-content: space-between;
     font-size: 0.75em;
     list-style-type: none;
     text-align: bottom left;
     width: 20%;
     height: 90%;
+    margin: 0;
 
     .chatMessages{
         height: 90%;
@@ -273,4 +277,12 @@
             width: 5%;
         }
     }
+}
+
+
+.TablesDataDisplay{
+width: 50%;
+height: 50%;
+margin:0% 0% 0% 0%;
+justify-content: space-between;
 }

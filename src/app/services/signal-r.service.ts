@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import {LobbyTableData,ChatMessages} from 'src/app/models/player.model';
+import {LobbyTableDataDTO,ChatMessages,LobbyConnectionData} from 'src/app/models/player.model';
 import { PlayerMenuComponent } from '../components/player-menu/player-menu.component';
-
+import { single } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+import { Route, Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService {
 
+export class SignalRService {
+  public ConnectionData:LobbyConnectionData={jwt:"",username:""};
   private UrlArray:string[]=['https://localhost:7267/BacarratLobby',
                               'https://localhost:7267/BlackJackLobby',
                               'https://localhost:7267/DragonTigerLobby',
@@ -15,52 +18,67 @@ export class SignalRService {
                               'https://localhost:7267/WarLobby'];
     
   private gameType:string[]=["Bacarrat","Blackjack","Dragon Tiger","Roulette","War"];
-  private map=new Map<string,signalR.HubConnection>();
-  private iterator:number=0;
-  public isEntered:boolean=false;
-  constructor() {
+  private newMap=new Map<string,string>();
+  private iterator:number;
+  private hubConnection:signalR.HubConnection;
+  private StartConnectionData:LobbyConnectionData;
+  constructor(private router:Router) {
     for (this.iterator=0;this.iterator<this.gameType.length;this.iterator++){
-      this.map.set(this.gameType[this.iterator],new signalR.HubConnectionBuilder()
-      .withUrl(this.UrlArray[this.iterator])
-      .build());
+      this.newMap.set(this.gameType[this.iterator],this.UrlArray[this.iterator]);
     }
+    this.hubConnection=new signalR.HubConnectionBuilder().withUrl('dummy').build();//dummy
+    this.StartConnectionData={jwt:"",username:""}
   }
-  public startConnection(gameType:string,messages:ChatMessages[],Author:string):void {
+  public startConnection(gameType:string):void {
+
+    let JWT=localStorage.getItem('jwt');
+    let USERNAME=localStorage.getItem('username');
+    if(JWT&&USERNAME)this.StartConnectionData={jwt:JWT.toString(),username:USERNAME.toString()}
+    const hubUrl = this.newMap.get(gameType)+`?param1=${encodeURIComponent(this.StartConnectionData.jwt)}&param2=${encodeURIComponent(this.StartConnectionData.username)}`;
     
-    if(this.map.get(gameType)!=undefined){
-    this.map.get(gameType)
-      ?.start()
+    this.hubConnection=new signalR.HubConnectionBuilder().withUrl(hubUrl).withAutomaticReconnect().build();
+    if(this.hubConnection!=undefined){
+      this.hubConnection?.start()
       .then(() => {
         console.log('SignalR connection started.');
-        console.log(this.map.get(gameType)?.connectionId);
-        console.log(this.map.get(gameType)?.baseUrl);
-        this.LobbyListener(gameType,Author,
-          (username:string,message:string)=>{
-            messages.push({ text: username+":",text2:message, textColor:'red',text2Color:'white'});   
-          });
-        this.ReportsListener(gameType,
-          (report:string) =>{
-            messages.push({ text: report,text2:"", textColor:'grey',text2Color:'white'})
-          });
-        // this.FirstConnectionTableData(gameType);
+        console.log(this.hubConnection?.baseUrl);
+        this.DisconnectFromServer((report:string) =>{
+          this.Disconnect();
+          console.log(report);
+          localStorage.clear();
+          this.router.navigate(['login']);
+        });
+        this.JwtUpdate((jwt:string)=>{
+          localStorage.setItem('jwt', jwt);
+        });
+
       })
-      .catch(err => console.log('Error while starting SignalR connection: ' + err));
-   }
+      .catch(err => console.log('Error while starting SignalR connection: ' + err));}
   }
-  public LobbyListener(gameType:string,Author:string,callback: (username:string,message: string) => void): void {
-    this.map.get(gameType)?.on('ChatMessages', callback);
+  public LobbyListener(callback: (username:string,message: string) => void): void {
+    this.hubConnection.on('ChatMessages', callback);
   }
-  public ReportsListener(gameType:string,callback: (report:string) => void): void{
-    this.map.get(gameType)?.on('ChatReports', callback);
+  public ReportsListener(callback: (report:string) => void): void{
+    this.hubConnection.on('ChatReports', callback);
   }
-  public SendChatMessage(gameType:string,username:string,message:string){
-    this.map.get(gameType)?.invoke('ChatMessages',username,message);
+  public TableDataListener(callback: (report:LobbyTableDataDTO[]) => void):void{
+    this.hubConnection.on('TablesData', callback);
   }
-  public QuitLobbyListener(gameType:string,Author:string){
-    this.map.get(gameType)?.off('ChatMessages');
-    this.map.get(gameType)?.off('ChatReports');
+  public SendChatMessage(username:string,message:string){
+    this.hubConnection?.invoke('ChatMessages',username,message);
   }
-  public Disconnect(gameType:string){
-    this.map.get(gameType)?.stop();
+  public JwtUpdate(callback: (report:string) => void): void{
+    this.hubConnection?.on('JwtUpdate', callback);
+  }
+  public DisconnectFromServer(callback: (report:string) => void): void{
+    this.hubConnection?.on('Disconnect', callback);
+  }
+  public QuitLobbyListener(){
+    this.hubConnection.off('ChatMessages');
+    this.hubConnection.off('ChatReports');
+    this.hubConnection.off('TablesData');
+  }
+  public Disconnect(){
+    this.hubConnection?.stop();
   }
 }

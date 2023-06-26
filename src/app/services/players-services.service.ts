@@ -37,6 +37,6 @@ export class PlayersServicesService {
     return this.http.put(this.baseApiUrl+'/api/Players/logout',jwt);
   }
   playerMenu(jwt:jwt): Observable<TableData> {
-    return this.http.post<TableData>(this.baseApiUrl + '/api/Players/TablesData',jwt);
+    return this.http.post<TableData>(this.baseApiUrl +'/api/Players/TablesData',jwt);
   }
 }

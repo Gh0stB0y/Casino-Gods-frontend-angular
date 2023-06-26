@@ -30,12 +30,13 @@
         <button id="btnChoose" (click)="ChooseGame(Currentgame)">Choose </button>
         <button id="btnChoose" (click)="GoBack()">Return </button>
     </div>
-
+   
+  
     <div *ngIf="CurrentDisplay==='Lobby'" class="chat">
       <div class="chatMessages" #chatMessages>
         <div *ngFor="let message of messages" class="message">
           <span [style.color]="message.textColor">{{ message.text }}</span>
-          <span [style.color]="message.text2Color">: {{ message.text2 }}</span>
+          <span [style.color]="message.text2Color">{{ message.text2 }}</span>
         </div>
       </div>
       <div class="chatInput">
@@ -43,8 +44,13 @@
         <button (click)="sendMessage()">Send</button>
       </div>
     </div>
+    <div *ngIf="CurrentDisplay==='Lobby'" class="TablesDataDisplay">
+    </div>
+  
+
+
     
-    
+
   </div>
   
 <!-- (click)="signUp()" -->

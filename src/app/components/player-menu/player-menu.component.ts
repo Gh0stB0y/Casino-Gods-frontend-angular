@@ -1,7 +1,7 @@
-import { Component,ViewChild, ElementRef,Input, OnInit,OnDestroy,OnChanges, SimpleChanges } from '@angular/core';
+import { Component,ViewChild, ElementRef,Input, OnInit,OnDestroy} from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { ChatMessages, jwt, LobbyDataInput, Player,TableData } from 'src/app/models/player.model';
+import { LobbyTableDataDTO,ChatMessages, jwt, LobbyDataInput, Player,TableData } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { AppModule } from 'src/app/app.module';
@@ -36,14 +36,14 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   newMessage: string = "";
   newAuthor:string="";
   
-  @ViewChild('chatMessages') chatMessagesRef!: ElementRef;
+  @ViewChild('chatMessages',{static:false})chatMessagesRef!: ElementRef;
   constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
               private appComponent:AppComponent) {
     /* funkcja sprawdzajaca czy ktos jest zalogowany na tym urzadzeniu. Jesli tak to zimportuj dane  */
     this.messages=[];
   }
   async ngOnInit(): Promise<void> {
-    //await this.appmodule.checkJWT(true);
+
     this.jwt_test=localStorage.getItem("jwt");
       if(this.jwt_test==null){
         localStorage.clear();
@@ -57,8 +57,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
               next: (dataResponse) => {
                 localStorage.setItem('jwt', dataResponse.jwt);  
                 this.gamesList=dataResponse.gameNames;
-                this.Currentgame=this.gamesList[this.currentGameIndex];
-                
+                this.Currentgame=this.gamesList[this.currentGameIndex];               
                 resolve(); // Resolve the Promise with the received data
               },
               error: (message) => {
@@ -82,10 +81,9 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   }
   ngOnDestroy(): void {
     let Author = localStorage.getItem("username");
-    if(Author)this.SignalRService.QuitLobbyListener(this.Currentgame,Author.toString());
-    this.SignalRService.Disconnect(this.Currentgame);
+    if(Author)this.SignalRService.QuitLobbyListener();
+    this.SignalRService.Disconnect();
   }
-  
   logOut(){
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
     this.jwtStorage=localStorage.getItem("jwt");
@@ -100,7 +98,6 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   statistics(){}
   play(){
     this.CurrentDisplay="TableChoose";
-    
   }
   left(){
     if(this.currentGameIndex===0){
@@ -130,7 +127,22 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     this.CurrentDisplay="Lobby";
     this.appComponent.ToggleWrapperWidth();
     let Author = localStorage.getItem("username");
-    if(Author)this.SignalRService.startConnection(gameType,this.messages,Author.toString());
+    if(Author)this.SignalRService.startConnection(gameType);
+    this.SignalRService.LobbyListener(
+      (username:string,message:string)=>{
+        this.messages.push({ text: username+":",text2:message, textColor:'red',text2Color:'white'});   
+        this.scrollToBottom();
+      });
+    this.SignalRService.ReportsListener(
+      (report:string) =>{
+        this.messages.push({ text: report,text2:"", textColor:'grey',text2Color:'white'});
+        this.scrollToBottom();
+      });
+    this.SignalRService.TableDataListener(
+      (tableData:LobbyTableDataDTO[])=>{
+        console.log(tableData);
+      });
+      
     this.Currentgame=gameType;
   }
   GoBack(){
@@ -139,8 +151,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   sendMessage() {
     if (this.newMessage.trim() !== '') {
       let Author = localStorage.getItem("username");
-      if(Author)this.SignalRService.SendChatMessage(this.Currentgame,Author.toString(),this.newMessage);
-      this.scrollToBottom();
+      if(Author)this.SignalRService.SendChatMessage(Author.toString(),this.newMessage);
     }
   }
   private scrollToBottom() {

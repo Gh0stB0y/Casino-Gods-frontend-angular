@@ -43,18 +43,22 @@ export interface LobbyDataInput{
     jwt:string;
     ChosenGame:string
 }
-
-export interface LobbyTableData{
-    jwt:string;
-    TableName:string;
-    MinBet:number;
-    MaxBet:number;
-    MasSeats:number;
-    SeatCount:number;
+export interface LobbyTableDataDTO{
+    TableInstanceId:string;
+    Name:string;
+    minBet:number;
+    maxBet:number;
+    betTime:number;
+    sidebets:boolean;
+    maxSeats:number;
 }
 export interface ChatMessages{
     text:string;
     text2:string;
     textColor:string;
     text2Color:string;
+}
+export interface LobbyConnectionData{
+    jwt:string;
+    username:string;
 }
