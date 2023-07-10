@@ -10,6 +10,7 @@ import { Route, Router } from '@angular/router';
 })
 
 export class SignalRService {
+  
   public ConnectionData:LobbyConnectionData={jwt:"",username:""};
   private UrlArray:string[]=['https://localhost:7267/BacarratLobby',
                               'https://localhost:7267/BlackJackLobby',
@@ -34,6 +35,7 @@ export class SignalRService {
     let JWT=localStorage.getItem('jwt');
     let USERNAME=localStorage.getItem('username');
     if(JWT&&USERNAME)this.StartConnectionData={jwt:JWT.toString(),username:USERNAME.toString()}
+    else{localStorage.clear();this.router.navigate(['login']);}
     const hubUrl = this.newMap.get(gameType)+`?param1=${encodeURIComponent(this.StartConnectionData.jwt)}&param2=${encodeURIComponent(this.StartConnectionData.username)}`;
     
     this.hubConnection=new signalR.HubConnectionBuilder().withUrl(hubUrl).withAutomaticReconnect().build();
@@ -42,6 +44,7 @@ export class SignalRService {
       .then(() => {
         console.log('SignalR connection started.');
         console.log(this.hubConnection?.baseUrl);
+        this.GetTableData();
         this.DisconnectFromServer((report:string) =>{
           this.Disconnect();
           console.log(report);
@@ -49,9 +52,9 @@ export class SignalRService {
           this.router.navigate(['login']);
         });
         this.JwtUpdate((jwt:string)=>{
-          localStorage.setItem('jwt', jwt);
+          localStorage.setItem("jwt", jwt);
+          //console.log("NOWE jwt: "+jwt);
         });
-
       })
       .catch(err => console.log('Error while starting SignalR connection: ' + err));}
   }
@@ -63,6 +66,9 @@ export class SignalRService {
   }
   public TableDataListener(callback: (report:LobbyTableDataDTO[]) => void):void{
     this.hubConnection.on('TablesData', callback);
+  }
+  public GetTableData(){
+    this.hubConnection?.invoke('GetTableData');
   }
   public SendChatMessage(username:string,message:string){
     this.hubConnection?.invoke('ChatMessages',username,message);

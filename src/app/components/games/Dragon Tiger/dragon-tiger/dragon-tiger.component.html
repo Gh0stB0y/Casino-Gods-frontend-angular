@@ -1,0 +1,29 @@
+<div class="menu-lobby">
+    <div class="playerInfo-lobby">
+      <p class="info">User: {{unameToDisplay}}</p>
+      <p class="info">Bankroll: {{bankrollToDisplay}}</p>  
+      <p class="info">Session profit: {{profitToDipslay}}</p>  
+    </div>
+      
+    <div  class="LobbyDisplay">
+      <div class="chat">
+        <div class="chatMessages" #chatMessages>
+          <div *ngFor="let message of messages" class="message">
+            <span [style.color]="message.textColor">{{ message.text }}</span>
+            <span [style.color]="message.text2Color">{{ message.text2 }}</span>
+          </div>
+        </div>
+        <div class="chatInput">
+        <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message...">
+        <button (click)="sendMessage()">Send</button>
+        </div>
+      </div>
+      
+    </div>
+
+
+    
+
+  </div>
+  
+<!-- (click)="signUp()" -->

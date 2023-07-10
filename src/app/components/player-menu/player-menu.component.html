@@ -31,22 +31,75 @@
         <button id="btnChoose" (click)="GoBack()">Return </button>
     </div>
    
-  
-    <div *ngIf="CurrentDisplay==='Lobby'" class="chat">
-      <div class="chatMessages" #chatMessages>
-        <div *ngFor="let message of messages" class="message">
-          <span [style.color]="message.textColor">{{ message.text }}</span>
-          <span [style.color]="message.text2Color">{{ message.text2 }}</span>
+    <div *ngIf="CurrentDisplay==='Lobby'" class="LobbyDisplay">
+      <div class="chat">
+        <div class="chatMessages" #chatMessages>
+          <div *ngFor="let message of messages" class="message">
+            <span [style.color]="message.textColor">{{ message.text }}</span>
+            <span [style.color]="message.text2Color">{{ message.text2 }}</span>
+          </div>
         </div>
-      </div>
-      <div class="chatInput">
+        <div class="chatInput">
         <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message...">
         <button (click)="sendMessage()">Send</button>
+        </div>
+      </div>
+      <div class="TablesDataDisplay">
+          <button [disabled]="!Arrows[0]"><img src="assets\images\leftarrow.png" (click)="leftTableDislay()" alt="leftarrow"></button>
+          <div class="TableScreen">
+            
+            <button id="TableButton" (click)="ChooseTable(TableDataFromServer[DisplayedTablesCurrentIterator*6])">
+              <h1>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6].Name}}</h1>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6].minBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6].maxBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6].betTime}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6].maxSeats}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6].sidebets}}</p>
+            </button>
+            <button id="TableButton" (click)="ChooseTable(TableDataFromServer[DisplayedTablesCurrentIterator*6+1])">
+              <h1>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+1].Name}}</h1>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+1].minBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+1].maxBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+1].betTime}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+1].maxSeats}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+1].sidebets}}</p>
+            </button>
+            <button id="TableButton" (click)="ChooseTable(TableDataFromServer[DisplayedTablesCurrentIterator*6+2])">
+              <h1>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+2].Name}}</h1>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+2].minBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+2].maxBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+2].betTime}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+2].maxSeats}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+2].sidebets}}</p>
+            </button>
+            <button id="TableButton" (click)="ChooseTable(TableDataFromServer[DisplayedTablesCurrentIterator*6+3])">
+              <h1>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+3].Name}}</h1>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+3].minBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+3].maxBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+3].betTime}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+3].maxSeats}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+3].sidebets}}</p>
+            </button>
+            <button id="TableButton" (click)="ChooseTable(TableDataFromServer[DisplayedTablesCurrentIterator*6+4])">
+              <h1>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+4].Name}}</h1>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+4].minBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+4].maxBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+4].betTime}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+4].maxSeats}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+4].sidebets}}</p>
+            </button>
+            <button id="TableButton" (click)="ChooseTable(TableDataFromServer[DisplayedTablesCurrentIterator*6+5])">
+              <h1>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].Name}}</h1>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].minBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].maxBet}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].betTime}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].maxSeats}}</p>
+              <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].sidebets}}</p>
+            </button>
+          </div>         
+          <button [disabled]="!Arrows[1]"><img src="assets\images\rightarrow.png" (click)="rightTableDislay()" alt="rightarrow"></button>
       </div>
     </div>
-    <div *ngIf="CurrentDisplay==='Lobby'" class="TablesDataDisplay">
-    </div>
-  
 
 
     
