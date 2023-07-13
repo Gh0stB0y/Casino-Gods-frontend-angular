@@ -214,7 +214,6 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
           tableArray.push(emptyobj);
           let emptyobj2:LobbyTableDataDTO={
             id:"",
-            tablePath:"",
             name:"",
             minBet:0,
             maxBet:0,
@@ -235,6 +234,8 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   GoBack(){
     this.CurrentDisplay="MainMenu";
   }
+  LobbyGoBack(){this.CurrentDisplay="TableChoose";this.messages.length=0;this.SignalRService.QuitLobbyListener();
+  this.SignalRService.Disconnect();}
   sendMessage() {
     if (this.newMessage.trim() !== '') {
       let Author = localStorage.getItem("username");
@@ -243,17 +244,17 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     }
   }
 
-  ChooseTable(Table:LobbyTableDataDTO){
+  async ChooseTable(Table:LobbyTableDataDTO){
     
     localStorage.setItem("TableId",Table.id);
-    localStorage.setItem("TablePath",Table.tablePath);
     localStorage.setItem("TableName",Table.name);
     localStorage.setItem("TableMinBet",Table.minBet.toString());
     localStorage.setItem("TableMaxBet",Table.maxBet.toString());
     localStorage.setItem("TableBetTime",Table.betTime.toString());
     localStorage.setItem("TableSidebets",Table.sidebets.toString());
     localStorage.setItem("TableMaxSeats",Table.maxSeats.toString());
-    this.router.navigate([this.Currentgame]);
+    let JWT=localStorage.getItem("jwt");
+    if(JWT)this.SignalRService.EnterTable(Table.id,JWT.toString());
   }
 
   private scrollToBottom() {

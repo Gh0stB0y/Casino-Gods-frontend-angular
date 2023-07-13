@@ -44,7 +44,9 @@
         <button (click)="sendMessage()">Send</button>
         </div>
       </div>
+      <div class="preTableDisplay">
       <div class="TablesDataDisplay">
+        
           <button [disabled]="!Arrows[0]"><img src="assets\images\leftarrow.png" (click)="leftTableDislay()" alt="leftarrow"></button>
           <div class="TableScreen">
             
@@ -96,11 +98,19 @@
               <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].maxSeats}}</p>
               <p>{{TablesInfoStrings[DisplayedTablesCurrentIterator*6+5].sidebets}}</p>
             </button>
+          
+          
           </div>         
+          
           <button [disabled]="!Arrows[1]"><img src="assets\images\rightarrow.png" (click)="rightTableDislay()" alt="rightarrow"></button>
-      </div>
+          
+      
+          
     </div>
-
+    <div class="returnButton">
+    <button  (click)="LobbyGoBack()">Return </button>
+    </div>
+    </div>
 
     
 

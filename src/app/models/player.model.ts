@@ -45,7 +45,6 @@ export interface LobbyDataInput{
 }
 export interface LobbyTableDataDTO{
     id:string;
-    tablePath:string;
     name:string;
     minBet:number;
     maxBet:number;
@@ -75,5 +74,4 @@ export interface TableConnectionData{
     jwt:string;
     username:string;
     TableId:string;
-    TablePath:string;
 }

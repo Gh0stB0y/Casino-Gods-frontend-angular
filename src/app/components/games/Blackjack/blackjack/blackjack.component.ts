@@ -32,21 +32,10 @@ export class BlackjackComponent implements OnInit,OnDestroy {
     }
   ngOnInit():void
   {
-    this.TableService.startConnection();
-    this.TableService.TableListener(
-      (username:string,message:string)=>{
-        this.messages.push({ text: username+":",text2:message, textColor:'red',text2Color:'white'});   
-        this.scrollToBottom();
-    });
-    this.TableService.ReportsListener(
-      (report:string) =>{
-        this.messages.push({ text: report,text2:"", textColor:'grey',text2Color:'white'});
-        this.scrollToBottom();
-    });
+    
   }
   ngOnDestroy(): void {
-    this.TableService.QuitTableListener();
-    this.TableService.Disconnect();
+
   }
   sendMessage() {
     if (this.newMessage.trim() !== '') {

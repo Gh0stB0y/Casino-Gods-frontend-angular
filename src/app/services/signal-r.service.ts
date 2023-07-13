@@ -73,6 +73,9 @@ export class SignalRService {
   public SendChatMessage(username:string,message:string){
     this.hubConnection?.invoke('ChatMessages',username,message);
   }
+  public EnterTable(TableId:string,jwt:string){
+    this.hubConnection?.invoke('EnterTable',TableId,);
+  }
   public JwtUpdate(callback: (report:string) => void): void{
     this.hubConnection?.on('JwtUpdate', callback);
   }
