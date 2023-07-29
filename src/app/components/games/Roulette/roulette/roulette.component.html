@@ -1,29 +1,93 @@
-<div class="menu-lobby">
-    <div class="playerInfo-lobby">
-      <p class="info">User: {{unameToDisplay}}</p>
-      <p class="info">Bankroll: {{bankrollToDisplay}}</p>  
-      <p class="info">Session profit: {{profitToDipslay}}</p>  
+  <div class="Background">
+    <div class="return">
+      <button class="returnButton" (click)="Return()">Return</button>
     </div>
-      
-    <div  class="LobbyDisplay">
-      <div class="chat">
-        <div class="chatMessages" #chatMessages>
-          <div *ngFor="let message of messages" class="message">
-            <span [style.color]="message.textColor">{{ message.text }}</span>
-            <span [style.color]="message.text2Color">{{ message.text2 }}</span>
+    <div class="GameInfo">
+      <p>Bets placed:</p>
+      <div class="InfoPanel">
+        <p>pmopmoqwopqwdopmqwopdqpwmdqpwodmqwpomdmopadqascascasc</p>
+      </div>
+    </div>
+    <div class="SpecialBets">
+      <button>Voisins du Zero</button>
+      <button>Orphelins en Plein</button>
+      <button>Tiers du cylindre</button>
+    </div>
+    <div class="Betting">
+      <div class="FirstPart">
+        <div class="Number0">
+          <button></button>
+        </div> 
+        <div class="Numbers">
+          <div class="UpperLowerRow">
+            <div class="Subpart1">
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+            </div>
+            <div class="Subpart2">
+              <button></button>
+            </div>
           </div>
+          <div class="MiddleRow">
+
+          </div>
+          <div class="UpperLowerRow">
+
+          </div>
+          
         </div>
-        <div class="chatInput">
-        <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message...">
-        <button (click)="sendMessage()">Send</button>
+        <div class="Rows">
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
+        <div class="SplitBets">
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
         </div>
       </div>
-      
+      <div class="SecondPart">
+        <div class="FirstSubpart">
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
+        <div class="SecondSubpart">
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
+      </div>
     </div>
-
-
-    
-
+    <div class="ChipsDisplay">
+      <div class="Chips">
+        <button><img src="'../../../../../assets/images/chip1_transparent.png" alt="Chip1 Button" /></button>
+        <button><img src="'../../../../../assets/images/chip5_transparent.png" alt="Chip5 Button" /></button>
+        <button><img src="'../../../../../assets/images/chip10_transparent.png" alt="Chip10 Button" /></button>
+        <button><img src="'../../../../../assets/images/chip25_transparent.png" alt="Chip25 Button" /></button>
+        <button><img src="'../../../../../assets/images/chip50_transparent.png" alt="Chip50 Button" /></button>
+        <button><img src="'../../../../../assets/images/chip100_transparent.png" alt="Chip100 Button" /></button> 
+        <button><img src="'../../../../../assets/images/chip500_transparent.png" alt="Chip500 Button" /></button>
+        <button><img src="'../../../../../assets/images/chip1000_transparent.png" alt="Chip1000 Button" /></button>
+      </div>
+      <div class="ManageChips">
+        <button>Undo</button>
+        <button>Repeat</button>
+        <button>Double</button>
+      </div>
+    </div>
   </div>
-  
-<!-- (click)="signUp()" -->

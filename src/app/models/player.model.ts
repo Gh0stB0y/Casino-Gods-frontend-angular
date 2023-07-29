@@ -50,6 +50,7 @@ export interface LobbyTableDataDTO{
     maxBet:number;
     betTime:number;
     sidebets:boolean;
+    currentSeats:number;
     maxSeats:number;
 }
 export interface TableInfoStrings{

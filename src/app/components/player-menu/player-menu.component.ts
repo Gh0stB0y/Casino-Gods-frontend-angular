@@ -16,6 +16,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   
   CurrentDisplay:string="MainMenu";
   Currentgame:string="Loading, please wait...";
+  TableDisplay:string="false";
   currentGameIndex:number=0;
   gamesList:string[]=[];
   lobbyData: LobbyDataInput={
@@ -34,8 +35,12 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   currentError:string="";
   jwtStorage:any="";
   messages:ChatMessages[]=[];
+  TableMessages:ChatMessages[]=[];
   newMessage: string = "";
   newAuthor:string="";
+  SwitchButtonText: string="Switch to table chat";
+  //SwitchButtonDisabled:boolean=true;
+  LobbyChatEnabled:boolean=true;
 
   Arrows:boolean[]=[true,true];
   DisplayedTablesCurrentIterator:number=0;
@@ -44,6 +49,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   TableDataFromServer:LobbyTableDataDTO[]=[];
   
   @ViewChild('chatMessages',{static:false})chatMessagesRef!: ElementRef;
+
   
   constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
               private appComponent:AppComponent) {
@@ -102,8 +108,12 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       
   }
   ngOnDestroy(): void {
+    this.TableGoback();
     this.SignalRService.QuitLobbyListener();
     this.SignalRService.Disconnect();
+    // let JWT=localStorage.getItem("jwt");
+    // if(JWT)this.SignalRService.QuitTable(JWT);
+    
   }
   logOut(){
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
@@ -176,6 +186,17 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
         this.messages.push({ text: report,text2:"", textColor:'grey',text2Color:'white'});
         this.scrollToBottom();
     });
+    this.SignalRService.ErrorListener(
+      (report:string) =>{
+        if(this.LobbyChatEnabled){
+          this.messages.push({ text:"ERROR: ",text2:report, textColor:'red',text2Color:'red'});
+          this.scrollToBottom();
+        }
+        else{
+          this.TableMessages.push({ text:"ERROR: ",text2:report, textColor:'red',text2Color:'red'});   
+          this.scrollToBottom();
+        }
+    });
     this.SignalRService.TableDataListener(
       (tableData:LobbyTableDataDTO[])=>{
         console.log(tableData);
@@ -198,7 +219,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
           maxBet: "Maximal bet: "+tableData[i].maxBet.toString(),
           betTime: "Time to bet: "+tableData[i].betTime.toString(),
           sidebets: "Sidebets enabled: "+tableData[i].sidebets.toString(),
-          maxSeats: "Seats: "+tableData[i].maxSeats.toString()
+          maxSeats: "Seats: "+tableData[i].currentSeats.toString()+" / "+tableData[i].maxSeats.toString()
         }
           tableArray.push(tableObj);
         }
@@ -219,23 +240,32 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
             maxBet:0,
             betTime:0,
             sidebets:false,
+            currentSeats:0,
             maxSeats:0
           };
           this.TableDataFromServer.push(emptyobj2);
         }
         this.TablesInfoStrings=tableArray;
       }
-    });
-    
-
-      
+    });      
     this.Currentgame=gameType;
   }
   GoBack(){
     this.CurrentDisplay="MainMenu";
   }
-  LobbyGoBack(){this.CurrentDisplay="TableChoose";this.messages.length=0;this.SignalRService.QuitLobbyListener();
-  this.SignalRService.Disconnect();}
+  LobbyGoBack(){
+    this.CurrentDisplay="TableChoose";this.messages.length=0;this.SignalRService.QuitLobbyListener();
+    this.SignalRService.Disconnect();
+  }
+  TableGoback(){
+    this.TableDisplay="false";
+    this.CurrentDisplay="Lobby";
+    this.LobbyChatEnabled=true;
+    this.SwitchButtonText="Switch to table chat";
+    this.SignalRService.QuitTableListener();
+    let JWT=localStorage.getItem("jwt");
+    if(JWT)this.SignalRService.QuitTable(JWT);
+  }
   sendMessage() {
     if (this.newMessage.trim() !== '') {
       let Author = localStorage.getItem("username");
@@ -243,7 +273,6 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       if(Author&&JWT)this.SignalRService.SendChatMessage(Author.toString(),this.newMessage);
     }
   }
-
   async ChooseTable(Table:LobbyTableDataDTO){
     
     localStorage.setItem("TableId",Table.id);
@@ -254,12 +283,43 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     localStorage.setItem("TableSidebets",Table.sidebets.toString());
     localStorage.setItem("TableMaxSeats",Table.maxSeats.toString());
     let JWT=localStorage.getItem("jwt");
-    if(JWT)this.SignalRService.EnterTable(Table.id,JWT.toString());
+    let TableNotFull:boolean=false;
+    if(JWT)TableNotFull=await this.SignalRService.EnterTable(Table.id,JWT.toString());
+    if(TableNotFull)
+    {
+    this.TableDisplay=this.Currentgame;
+    this.TableMessages=[];
+    this.SignalRService.TableChatListener(
+      (username:string,message:string)=>{
+        this.TableMessages.push({ text: username+":",text2:message, textColor:'red',text2Color:'white'});   
+        this.scrollToBottom();
+    });
+    this.SignalRService.TableReportsListener(
+      (report:string) =>{
+        this.TableMessages.push({ text: report,text2:"", textColor:'grey',text2Color:'white'});
+        this.scrollToBottom();
+    });
+    }
+    else console.log("Table is full");
+    
   }
-
   private scrollToBottom() {
     this.newMessage = '';
     const chatMessagesEl = this.chatMessagesRef.nativeElement;
     chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  }
+  RefreshTableData(){
+    this.SignalRService.GetTableData();
+  }
+  switchChat(){
+    if(this.LobbyChatEnabled===true)this.SwitchButtonText="Switch to lobby chat";
+    else this.SwitchButtonText="Switch to table chat";
+    this.LobbyChatEnabled=!this.LobbyChatEnabled; 
+  }
+  sendTableMessage(){
+    let Author = localStorage.getItem("username");
+      let JWT=localStorage.getItem("jwt");
+      if(Author&&JWT)this.SignalRService.TableChatMessage(Author.toString(),this.newMessage);
+    
   }
 }

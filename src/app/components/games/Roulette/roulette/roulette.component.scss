@@ -1,96 +1,345 @@
-.menu-lobby{
-    z-index: 2;
-    background-color: rgba(0,0,0,0.5);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 550px;
-    min-height: 600px;
-    width: 1300px;
-    height: 700px;
-    text-align: center;
-    font-size: 18px;
-}
+// .menu-lobby{
+//     z-index: 2;
+//     background-color: rgba(0,0,0,0.5);
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     min-width: 550px;
+//     min-height: 600px;
+//     width: 1300px;
+//     height: 700px;
+//     text-align: center;
+//     font-size: 18px;
+// }
 
-.playerInfo-lobby{
-    height: 5%;
-    margin: 1% auto 1% auto;
-    color:white;
-    display:flex;
-    width: 95%;
-    text-align: center;
-    .info{
-        width: 50%;
-        margin: 0%;
-    }
-    font-size: 1.25em;
-}
+// .playerInfo-lobby{
+//     height: 5%;
+//     margin: 1% auto 1% auto;
+//     color:white;
+//     display:flex;
+//     width: 95%;
+//     text-align: center;
+//     .info{
+//         width: 50%;
+//         margin: 0%;
+//     }
+//     font-size: 1.25em;
+// }
 
-.LobbyDisplay{
-    width: 100%;
-    height: 90%;
-    display: flex;
-    margin:0% 0% 0% 0%;
-}
+// .LobbyDisplay{
+//     width: 100%;
+//     height: 90%;
+//     display: flex;
+//     margin:0% 0% 0% 0%;
+// }
 
-.chat{
+// .chat{
 
-    display: block;
-    justify-content: space-between;
-    font-size: 0.75em;
-    list-style-type: none;
-    text-align: bottom left;
-    width: 20%;
-    height: 100%;
-    margin: 0;
+//     display: block;
+//     justify-content: space-between;
+//     font-size: 0.75em;
+//     list-style-type: none;
+//     text-align: bottom left;
+//     width: 20%;
+//     height: 100%;
+//     margin: 0;
 
-    .chatMessages{
-        height: 90%;
-        text-align: left;
-        text-decoration: none;
-        font-family:Merriweather Sans;
-        color: white;
-        margin: 5% 0% 5% 5%;
-        overflow-y: auto;
-        background: transparent;
-        white-space: pre-wrap;
-        word-wrap: break-word;
+//     .chatMessages{
+//         height: 90%;
+//         text-align: left;
+//         text-decoration: none;
+//         font-family:Merriweather Sans;
+//         color: white;
+//         margin: 5% 0% 5% 5%;
+//         overflow-y: auto;
+//         background: transparent;
+//         white-space: pre-wrap;
+//         word-wrap: break-word;
 
-        &::-webkit-scrollbar {
-            width: 8px;
-            background-color: transparent;
-          }
+//         &::-webkit-scrollbar {
+//             width: 8px;
+//             background-color: transparent;
+//           }
         
-          &::-webkit-scrollbar-thumb {
-            background-color: white;
-            border-radius:4px;
-          }
-    }
+//           &::-webkit-scrollbar-thumb {
+//             background-color: white;
+//             border-radius:4px;
+//           }
+//     }
     
-    .chatInput{
-        height: 10%;
-        margin: 2% 0% 0% 5%;
-    }
+//     .chatInput{
+//         height: 10%;
+//         margin: 2% 0% 0% 5%;
+//     }
 
+//     button{
+//         background-color: #970202;
+//         border: 2px solid #5a0303;
+//         text-transform: uppercase;
+//         text-align: center;
+//         text-decoration: none;
+//         font-family:Merriweather Sans;
+//         color: white;
+//         &:hover{
+//             cursor: pointer;
+//             background-color: rgba(77, 0, 0, 0.8);
+//         }
+//         input{
+//             width: 95%;
+//         }
+//         button{
+//             width: 5%;
+//         }
+//     }
+// }
+
+.Background{
+    background-image: url('../../../../../assets/images/roulette-transformed.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px; // Adjust the value to control the level of border rounding
+    overflow: hidden;
+  }
+  .return {
+    width: 100%;
+    height: 5%;
+    margin: 0% 0% 0% 0%;
+    .returnButton 
+    {
+      position: relative;
+      top: 0;
+      right: 0;
+      margin: 0;
+      width: 25%;
+    }
+      
+    button
+    {
+      width:100%;
+      height: 100%;
+      background-color: #970202;
+      border: 2px solid #5a0303;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      font-family:Merriweather Sans;
+      color: white;
+      &:hover{
+        cursor: pointer;
+        background-color: rgba(77, 0, 0, 0.8);
+      }
+    }
+  }
+  .GameInfo{
+    width: 95%;
+    height: 10.5%;
+    margin: 0.5% 2.5% 1% 2.5%;
+    background-color: rgba(0, 0, 0, 0.35);
+    word-wrap: break-word;
+    overflow: auto;
+    .InfoPanel{
+      width: auto;
+      height: auto;
+    }
+    p{
+      margin: .5% 0.5% 0% 0.5%;
+      width: auto;
+      height: auto;
+      text-align: left;
+      text-decoration: none;
+      font-family:Merriweather Sans;
+      font-size: .75em;
+      color: white;
+    }
+  }
+  .SpecialBets{
+    width: 70%;
+    height: 5%;
+    margin: 0% 15% 0% 15%;
+    display: grid; /* Use CSS grid to create the grid layout */
+    grid-template-columns: repeat(3, 1fr); /* Create 12 columns */
+    grid-template-rows: repeat(1, auto); /* Create 3 rows (you can use specific height values as well) */
+    gap: 1%;
     button{
-        background-color: #970202;
-        border: 2px solid #5a0303;
-        text-transform: uppercase;
-        text-align: center;
-        text-decoration: none;
-        font-family:Merriweather Sans;
-        color: white;
-        &:hover{
-            cursor: pointer;
-            background-color: rgba(77, 0, 0, 0.8);
-        }
-        input{
-            width: 95%;
-        }
-        button{
-            width: 5%;
-        }
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+      margin: 0;
+      padding: 0;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-family:Merriweather Sans;
+      text-transform: uppercase;
+      color: white;
+      &:hover{
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.25);
+        
+      }
     }
-}
+  }
+  .Betting{
+    width: 85%;
+    height: 54.5%;
+    margin: 1% 7.5% 0% 7.5%;
+    .FirstPart{
+      display: flex;
+      width: 100%;
+      height: 66%;
+      button{
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border: none;
+        margin: 0;
+        padding: 0;
+        &:hover{
+          cursor: pointer;
+          background-color: rgba(255, 255, 255, 0.25);
+        }
+      }
+      .Number0{
+        position: relative;
+        height: 100%;
+        width: 6.5%;
+      }
+      .Numbers{
+        position: relative;
+        display: block;
+        height: 100%;
+        width: 86.35%;
+        .UpperLowerRow{
+          width: 100%;
+          height: 30%;
+          display: flex;
+          .Subpart1{
+            position: relative;
+            display: grid; /* Use CSS grid to create the grid layout */
+            grid-template-columns: repeat(11, 1fr);
+            grid-template-rows: repeat(1, auto);
+            left:0;
+            top:0;
+            margin: 0;
+            height: 100%;
+            width: 90.5%;
+          }
+          .Subpart2{
+            height: 100%;
+            width: 9.5%;
+          }
+        }
+        .MiddleRow{
+          width: 100%;
+          height: 39%;
+          display: flex;
+        }
+        //display: grid; /* Use CSS grid to create the grid layout */
+        //grid-template-columns: repeat(11, 1fr); /* Create 12 columns */
+        //grid-template-rows: repeat(3, auto); /* Create 3 rows (you can use specific height values as well) */
+        //gap: 0;
+        
+      }
+      .Rows{
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 7.15%;
+        height: 100%;
+      }    
+    }
+    .SecondPart{
+      width: 85%;
+      height: 34%;
+      margin: 0% 7.5% 0% 7.5%;
+      button{
+        background-color: transparent;
+        border: none;
+        margin: 0;
+        padding: 0;
+        &:hover{
+          cursor: pointer;
+          background-color: rgba(255, 255, 255, 0.25);
+        }
+      }
+      .FirstSubpart{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(1, auto);
+        width: 100%;
+        height: 50%;
+        margin: 0;
+        padding: 0;
+      }
+      .SecondSubpart{
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(1, auto);
+        width: 100%;
+        height: 50%;
+        margin: 0;
+        padding: 0;     
+      }
+    }
+  }
+  .ChipsDisplay{
+    position: relative;
+    height: 20%;
+    width: 100%;
+    margin: 1% 0% 0% 0%;
+    .Chips{
+      width: 80%;
+      height: 65%;
+      margin: 0 auto;
+      align-items: center;
+      padding: 0;
+      border: none;
+      button{
+        justify-content: space-around;
+        height: 100%;
+        width: 10%; 
+        padding: 0% 0% 0% 0%;
+        background-color: transparent;
+        border: none;
+        border-radius: 25%;
+        img { 
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+          object-position: center;
+        }
+        &:hover{
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+      }
+      
+    }
+    .ManageChips{
+      margin:0.5% auto 0.5% auto;
+      width: 40%;
+      height: 29%;
+    button{
+      width:29%;
+      height: 100%;
+      margin: 0% 2% 0% 2%;
+      background-color: #970202;
+      border: 2px solid #5a0303;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      font-family:Merriweather Sans;
+      color: white;
+      &:hover{
+          cursor: pointer;
+          background-color: rgba(77, 0, 0, 0.8);
+      }
+    }
+    }
+  }
 
+  

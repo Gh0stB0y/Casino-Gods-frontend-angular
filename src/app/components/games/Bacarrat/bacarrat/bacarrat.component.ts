@@ -6,6 +6,7 @@ import { ChatMessages } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
 import { TableServiceService } from 'src/app/services/table-service.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
+import { PlayerMenuComponent } from 'src/app/components/player-menu/player-menu.component';
 @Component({
   selector: 'app-bacarrat',
   templateUrl: './bacarrat.component.html',
@@ -25,7 +26,7 @@ export class BacarratComponent implements OnInit, OnDestroy {
   @ViewChild('chatMessages',{static:false})chatMessagesRef!: ElementRef;
   
   constructor(private playersService: PlayersServicesService,private TableService:TableServiceService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
-    private appComponent:AppComponent){
+    private appComponent:AppComponent,private playerMenu:PlayerMenuComponent){
       this.messages=[];
     }
   ngOnInit():void
@@ -38,11 +39,8 @@ export class BacarratComponent implements OnInit, OnDestroy {
   }
   sendMessage() {
 
-    }
-  
-  // private scrollToBottom() {
-  //   this.newMessage = '';
-  //   const chatMessagesEl = this.chatMessagesRef.nativeElement;
-  //   chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-  // }
+  }
+  Return(){
+    this.playerMenu.TableGoback();
+  }
 }

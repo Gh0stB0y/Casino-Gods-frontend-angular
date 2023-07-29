@@ -64,8 +64,17 @@ export class SignalRService {
   public ReportsListener(callback: (report:string) => void): void{
     this.hubConnection.on('ChatReports', callback);
   }
+  public TableChatListener(callback: (username:string,message: string) => void): void {
+    this.hubConnection.on('TableChatMessages', callback);
+  }
+  public TableReportsListener(callback: (report:string) => void): void{
+    this.hubConnection.on('TableChatReports', callback);
+  }
   public TableDataListener(callback: (report:LobbyTableDataDTO[]) => void):void{
     this.hubConnection.on('TablesData', callback);
+  }
+  public ErrorListener(callback: (report:string)=>void):void{
+    this.hubConnection.on("ErrorMessages",callback);
   }
   public GetTableData(){
     this.hubConnection?.invoke('GetTableData');
@@ -73,8 +82,13 @@ export class SignalRService {
   public SendChatMessage(username:string,message:string){
     this.hubConnection?.invoke('ChatMessages',username,message);
   }
-  public EnterTable(TableId:string,jwt:string){
-    this.hubConnection?.invoke('EnterTable',TableId,);
+  public TableChatMessage(username:string,message:string){
+    this.hubConnection?.invoke('TableChatMessages',username,message);
+  }
+  public async EnterTable(TableId:string,jwt:string):Promise<boolean>{
+    const result:boolean = await this.hubConnection?.invoke('EnterTable',TableId,jwt);
+    // this.hubConnection?.invoke('EnterTable',TableId,jwt);
+    return result;
   }
   public JwtUpdate(callback: (report:string) => void): void{
     this.hubConnection?.on('JwtUpdate', callback);
@@ -82,10 +96,19 @@ export class SignalRService {
   public DisconnectFromServer(callback: (report:string) => void): void{
     this.hubConnection?.on('Disconnect', callback);
   }
+  public QuitTable(jwt:string){
+    this.hubConnection?.invoke("QuitTable",jwt);
+  }
   public QuitLobbyListener(){
     this.hubConnection.off('ChatMessages');
     this.hubConnection.off('ChatReports');
+    this.hubConnection.off('TableChatMessages');
+    this.hubConnection.off('TableChatReports');
     this.hubConnection.off('TablesData');
+  }
+  public QuitTableListener(){
+    this.hubConnection.off('TableChatMessages');
+    this.hubConnection.off('TableChatReports');
   }
   public Disconnect(){
     this.hubConnection?.stop();
