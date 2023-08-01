@@ -4,90 +4,147 @@
     </div>
     <div class="GameInfo">
       <p>Bets placed:</p>
-      <div class="InfoPanel">
-        <p>pmopmoqwopqwdopmqwopdqpwmdqpwodmqwpomdmopadqascascasc</p>
-      </div>
+      <span>{{CurrentBetsInfo}}</span>
     </div>
     <div class="SpecialBets">
-      <button>Voisins du Zero</button>
-      <button>Orphelins en Plein</button>
-      <button>Tiers du cylindre</button>
+      <button (click)="VoisinsDuZero()"(contextmenu)="SubstractVoisinsDuZero($event)">Voisins du Zero</button>
+      <button (click)="OrphellinsDuPlein()"(contextmenu)="SubstractOrphellinsDuPlein($event)">Orphelins en Plein</button>
+      <button (click)="TiersDuCylindre()"(contextmenu)="SubstractTiersDuCylindre($event)">Tiers du cylindre</button>
     </div>
     <div class="Betting">
       <div class="FirstPart">
         <div class="Number0">
-          <button></button>
+          <button (click)="AddBet(0)" (contextmenu)="SubstractBet(0,$event)"><img *ngIf="Bets[0] > 0" [src]="BetImagePath" alt="BetChip"></button>
         </div> 
         <div class="Numbers">
           <div class="UpperLowerRow">
             <div class="Subpart1">
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
-              <button></button>
+              <div class="ThinRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+109)" (contextmenu)="SubstractBet(i+109,$event)"><img *ngIf="Bets[i+109] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i+73)" (contextmenu)="SubstractBet(i+73,$event)"><img *ngIf="Bets[i+73] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div>
+              </div>
+              <div class="ThickRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+37)" (contextmenu)="SubstractBet(i+37,$event)"><img *ngIf="Bets[i+37] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i*3+3)" (contextmenu)="SubstractBet(i*3+3,$event)"><img *ngIf="Bets[i*3+3] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div>
+              </div>
             </div>
             <div class="Subpart2">
-              <button></button>
+              <div class="ThinRow">
+                <button class="ThinButton"(click)="AddBet(120)" (contextmenu)="SubstractBet(120,$event)"><img *ngIf="Bets[120] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                <button class="ThickButton"(click)="AddBet(84)" (contextmenu)="SubstractBet(84,$event)"><img *ngIf="Bets[84] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
+              <div class="ThickRow">
+                <button class="ThinButton"(click)="AddBet(48)" (contextmenu)="SubstractBet(48,$event)"><img *ngIf="Bets[48] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                <button class="ThickButton"(click)="AddBet(36)" (contextmenu)="SubstractBet(36,$event)"><img *ngIf="Bets[36] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
             </div>
           </div>
           <div class="MiddleRow">
-
+            <div class="MiddleMain">
+              <div class="ThinRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+121)" (contextmenu)="SubstractBet(i+121,$event)"><img *ngIf="Bets[i+121] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i+85)" (contextmenu)="SubstractBet(i+85,$event)"><img *ngIf="Bets[i+85] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div>
+              </div>
+              <div class="ThickRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+49)" (contextmenu)="SubstractBet(i+49,$event)"><img *ngIf="Bets[i+49] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i*3+2)" (contextmenu)="SubstractBet(i*3+2,$event)"><img *ngIf="Bets[i*3+2] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div>
+              </div>
+              <div class="ThinRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+133)" (contextmenu)="SubstractBet(i+133,$event)"><img *ngIf="Bets[i+133] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i+97)" (contextmenu)="SubstractBet(i+97,$event)"><img *ngIf="Bets[i+97] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div>
+              </div>
+            </div>
+            <div class="MiddleRight">
+              <div class="ThinRow">
+                <button class="ThinButton"(click)="AddBet(132)" (contextmenu)="SubstractBet(132,$event)"><img *ngIf="Bets[132] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                <button class="ThickButton"(click)="AddBet(96)" (contextmenu)="SubstractBet(96,$event)"><img *ngIf="Bets[96] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
+              <div class="ThickRow">
+                <button class="ThinButton"(click)="AddBet(60)" (contextmenu)="SubstractBet(60,$event)"><img *ngIf="Bets[60] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(35)" (contextmenu)="SubstractBet(35,$event)"><img *ngIf="Bets[35] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
+              <div class="ThinRow">
+                <button class="ThinButton"(click)="AddBet(144)" (contextmenu)="SubstractBet(144,$event)"><img *ngIf="Bets[144] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                <button class="ThickButton"(click)="AddBet(108)" (contextmenu)="SubstractBet(108,$event)"><img *ngIf="Bets[108] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
+            </div>
           </div>
           <div class="UpperLowerRow">
-
+            <div class="Subpart1">
+              <div class="ThickRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+61)" (contextmenu)="SubstractBet(i+61,$event)"><img *ngIf="Bets[i+61] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i*3+1)" (contextmenu)="SubstractBet(i*3+1,$event)"><img *ngIf="Bets[i*3+1] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div> 
+              </div>
+              <div class="ThinRow">
+                <div *ngFor="let i of loopRange" class="ButtonPair">
+                  <button class="ThinButton"(click)="AddBet(i+109)" (contextmenu)="SubstractBet(i+109,$event)"><img *ngIf="Bets[i+109] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                  <button class="ThickButton"(click)="AddBet(i+73)" (contextmenu)="SubstractBet(i+73,$event)"><img *ngIf="Bets[i+73] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                </div>
+              </div>         
+            </div>
+            <div class="Subpart2">
+              <div class="ThickRow">
+                <button class="ThinButton"(click)="AddBet(72)" (contextmenu)="SubstractBet(72,$event)"><img *ngIf="Bets[72] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                <button class="ThickButton"(click)="AddBet(34)" (contextmenu)="SubstractBet(34,$event)"><img *ngIf="Bets[34] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
+              <div class="ThinRow">
+                <button class="ThinButton"(click)="AddBet(120)" (contextmenu)="SubstractBet(120,$event)"><img *ngIf="Bets[120] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+                <button class="ThickButton"(click)="AddBet(84)" (contextmenu)="SubstractBet(84,$event)"><img *ngIf="Bets[84] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+              </div>
+            </div>
           </div>
-          
         </div>
         <div class="Rows">
-          <button></button>
-          <button></button>
-          <button></button>
-        </div>
-        <div class="SplitBets">
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
+          <button (click)="AddBet(145)" (contextmenu)="SubstractBet(145,$event)"><img *ngIf="Bets[145] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(146)" (contextmenu)="SubstractBet(146,$event)"><img *ngIf="Bets[146] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(147)" (contextmenu)="SubstractBet(147,$event)"><img *ngIf="Bets[147] > 0" [src]="BetImagePath" alt="BetChip" ></button>
         </div>
       </div>
       <div class="SecondPart">
         <div class="FirstSubpart">
-          <button></button>
-          <button></button>
-          <button></button>
+          <button (click)="AddBet(148)" (contextmenu)="SubstractBet(148,$event)"><img *ngIf="Bets[148] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(149)" (contextmenu)="SubstractBet(149,$event)"><img *ngIf="Bets[149] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(150)" (contextmenu)="SubstractBet(150,$event)"><img *ngIf="Bets[150] > 0" [src]="BetImagePath" alt="BetChip" ></button>
         </div>
         <div class="SecondSubpart">
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
+          <button (click)="AddBet(151)" (contextmenu)="SubstractBet(151,$event)"><img *ngIf="Bets[151] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(153)" (contextmenu)="SubstractBet(153,$event)"><img *ngIf="Bets[153] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(155)" (contextmenu)="SubstractBet(155,$event)"><img *ngIf="Bets[155] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(156)" (contextmenu)="SubstractBet(156,$event)"><img *ngIf="Bets[156] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(154)" (contextmenu)="SubstractBet(154,$event)"><img *ngIf="Bets[154] > 0" [src]="BetImagePath" alt="BetChip" ></button>
+          <button (click)="AddBet(152)" (contextmenu)="SubstractBet(152,$event)"><img *ngIf="Bets[152] > 0" [src]="BetImagePath" alt="BetChip" ></button>
         </div>
       </div>
     </div>
     <div class="ChipsDisplay">
       <div class="Chips">
-        <button><img src="'../../../../../assets/images/chip1_transparent.png" alt="Chip1 Button" /></button>
-        <button><img src="'../../../../../assets/images/chip5_transparent.png" alt="Chip5 Button" /></button>
-        <button><img src="'../../../../../assets/images/chip10_transparent.png" alt="Chip10 Button" /></button>
-        <button><img src="'../../../../../assets/images/chip25_transparent.png" alt="Chip25 Button" /></button>
-        <button><img src="'../../../../../assets/images/chip50_transparent.png" alt="Chip50 Button" /></button>
-        <button><img src="'../../../../../assets/images/chip100_transparent.png" alt="Chip100 Button" /></button> 
-        <button><img src="'../../../../../assets/images/chip500_transparent.png" alt="Chip500 Button" /></button>
-        <button><img src="'../../../../../assets/images/chip1000_transparent.png" alt="Chip1000 Button" /></button>
+        <button [class.clicked]="IsClicked[0]" (click)="SwitchCoin(1,0)"><img src="'../../../../../assets/images/chip1_transparent.png" alt="Chip1 Button" /></button>
+        <button [class.clicked]="IsClicked[1]" (click)="SwitchCoin(5,1)"><img src="'../../../../../assets/images/chip5_transparent.png" alt="Chip5 Button" /></button>
+        <button [class.clicked]="IsClicked[2]" (click)="SwitchCoin(10,2)"><img src="'../../../../../assets/images/chip10_transparent.png" alt="Chip10 Button" /></button>
+        <button [class.clicked]="IsClicked[3]" (click)="SwitchCoin(25,3)"><img src="'../../../../../assets/images/chip25_transparent.png" alt="Chip25 Button" /></button>
+        <button [class.clicked]="IsClicked[4]" (click)="SwitchCoin(50,4)"><img src="'../../../../../assets/images/chip50_transparent.png" alt="Chip50 Button" /></button>
+        <button [class.clicked]="IsClicked[5]" (click)="SwitchCoin(100,5)"><img src="'../../../../../assets/images/chip100_transparent.png" alt="Chip100 Button" /></button> 
+        <button [class.clicked]="IsClicked[6]" (click)="SwitchCoin(500,6)"><img src="'../../../../../assets/images/chip500_transparent.png" alt="Chip500 Button" /></button>
+        <button [class.clicked]="IsClicked[7]" (click)="SwitchCoin(1000,7)"><img src="'../../../../../assets/images/chip1000_transparent.png" alt="Chip1000 Button" /></button>
       </div>
       <div class="ManageChips">
-        <button>Undo</button>
-        <button>Repeat</button>
-        <button>Double</button>
+        <p>Total Bet: {{TotalBet}}</p>
+        <button (click)="Undo()">Undo</button>
+        <button (click)="Repeat()">Repeat</button>
+        <button (click)="Double()">Double</button>
+        <p>Board coverage: </p>
       </div>
     </div>
   </div>

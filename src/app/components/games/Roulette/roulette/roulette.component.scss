@@ -1,98 +1,4 @@
-// .menu-lobby{
-//     z-index: 2;
-//     background-color: rgba(0,0,0,0.5);
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     min-width: 550px;
-//     min-height: 600px;
-//     width: 1300px;
-//     height: 700px;
-//     text-align: center;
-//     font-size: 18px;
-// }
 
-// .playerInfo-lobby{
-//     height: 5%;
-//     margin: 1% auto 1% auto;
-//     color:white;
-//     display:flex;
-//     width: 95%;
-//     text-align: center;
-//     .info{
-//         width: 50%;
-//         margin: 0%;
-//     }
-//     font-size: 1.25em;
-// }
-
-// .LobbyDisplay{
-//     width: 100%;
-//     height: 90%;
-//     display: flex;
-//     margin:0% 0% 0% 0%;
-// }
-
-// .chat{
-
-//     display: block;
-//     justify-content: space-between;
-//     font-size: 0.75em;
-//     list-style-type: none;
-//     text-align: bottom left;
-//     width: 20%;
-//     height: 100%;
-//     margin: 0;
-
-//     .chatMessages{
-//         height: 90%;
-//         text-align: left;
-//         text-decoration: none;
-//         font-family:Merriweather Sans;
-//         color: white;
-//         margin: 5% 0% 5% 5%;
-//         overflow-y: auto;
-//         background: transparent;
-//         white-space: pre-wrap;
-//         word-wrap: break-word;
-
-//         &::-webkit-scrollbar {
-//             width: 8px;
-//             background-color: transparent;
-//           }
-        
-//           &::-webkit-scrollbar-thumb {
-//             background-color: white;
-//             border-radius:4px;
-//           }
-//     }
-    
-//     .chatInput{
-//         height: 10%;
-//         margin: 2% 0% 0% 5%;
-//     }
-
-//     button{
-//         background-color: #970202;
-//         border: 2px solid #5a0303;
-//         text-transform: uppercase;
-//         text-align: center;
-//         text-decoration: none;
-//         font-family:Merriweather Sans;
-//         color: white;
-//         &:hover{
-//             cursor: pointer;
-//             background-color: rgba(77, 0, 0, 0.8);
-//         }
-//         input{
-//             width: 95%;
-//         }
-//         button{
-//             width: 5%;
-//         }
-//     }
-// }
 
 .Background{
     background-image: url('../../../../../assets/images/roulette-transformed.jpg');
@@ -136,23 +42,36 @@
   .GameInfo{
     width: 95%;
     height: 10.5%;
-    margin: 0.5% 2.5% 1% 2.5%;
+    margin: 0.5% 2.5% 0.5% 2.5%;
     background-color: rgba(0, 0, 0, 0.35);
+    display: block;
     word-wrap: break-word;
-    overflow: auto;
-    .InfoPanel{
-      width: auto;
-      height: auto;
-    }
+    
     p{
-      margin: .5% 0.5% 0% 0.5%;
-      width: auto;
-      height: auto;
+      margin: 0.5% 0.5% 0% 0.5%;
+      width: 99%;
+      height: 30%;
       text-align: left;
       text-decoration: none;
       font-family:Merriweather Sans;
       font-size: .75em;
       color: white;
+    }
+    span{
+      width: 99%;
+      height: 60%;
+      
+      margin: 0.5% 0.5% 0% 0.5%;
+      text-align: left;
+      text-decoration: none;
+      font-family:Merriweather Sans;
+      font-size: .75em;
+      color: white;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      float: left;
+      overflow-y: auto;
+      
     }
   }
   .SpecialBets{
@@ -185,12 +104,12 @@
   }
   .Betting{
     width: 85%;
-    height: 54.5%;
-    margin: 1% 7.5% 0% 7.5%;
+    height: 57%;
+    margin: 0.0% 7.5% 0% 7.5%;
     .FirstPart{
       display: flex;
       width: 100%;
-      height: 66%;
+      height: 69.5%;
       button{
         width: 100%;
         height: 100%;
@@ -198,45 +117,193 @@
         border: none;
         margin: 0;
         padding: 0;
+        justify-content: center;
+        align-items: center;
         &:hover{
           cursor: pointer;
-          background-color: rgba(255, 255, 255, 0.25);
+          //background-color: rgba(255,255,255, 0.35);
+        }
+        img{
+          width: 2rem;
+          height: 2rem;
+
         }
       }
       .Number0{
         position: relative;
         height: 100%;
-        width: 6.5%;
+        width: 6.0%;
+        padding: 1% 0% 1% 0%;
       }
       .Numbers{
         position: relative;
         display: block;
         height: 100%;
-        width: 86.35%;
+        width: 86.85%;
         .UpperLowerRow{
           width: 100%;
-          height: 30%;
+          height: 31%;
           display: flex;
           .Subpart1{
-            position: relative;
-            display: grid; /* Use CSS grid to create the grid layout */
-            grid-template-columns: repeat(11, 1fr);
-            grid-template-rows: repeat(1, auto);
-            left:0;
-            top:0;
-            margin: 0;
             height: 100%;
-            width: 90.5%;
+            width: 90%;
+            display: block;
+            .ThinRow{
+              width: 100%;
+              height: 22%;
+              position: relative;
+              display: grid; /* Use CSS grid to create the grid layout */
+              grid-template-columns: repeat(11, 1fr);
+              grid-template-rows: repeat(1, auto);
+              .ButtonPair{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                .ThinButton{
+                  width: 45%;
+                  height: 100%;
+                }
+                .ThickButton{
+                  width: 55%;
+                  height: 100%;
+                }
+              }
+            }
+            .ThickRow{
+              position: relative;
+              display: grid; /* Use CSS grid to create the grid layout */
+              grid-template-columns: repeat(11, 1fr);
+              grid-template-rows: repeat(1, auto);
+              left:0;
+              top:0;
+              margin: 0;
+              height:78%;
+              width: 100%;
+              .ButtonPair{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                .ThinButton{
+                  width: 45%;
+                  height: 100%;
+                  display: flex;
+                }
+                .ThickButton{
+                  width: 55%;
+                  height: 100%;
+                  display: flex;
+                }
+              }
+            }
           }
           .Subpart2{
             height: 100%;
-            width: 9.5%;
+            width: 10%;
+            display: block;
+            .ThinRow{
+              width: 100%;
+              height: 23%;
+              display: flex;
+              .ThinButton{
+                width: 32.5%;
+                height: 100%;
+              }
+              .ThickButton{
+                width: 67.5%;
+                height: 100%;
+              }
+            }
+            .ThickRow{
+              width: 100%;
+              height: 77%;
+              display: flex;
+              .ThinButton{
+                width: 32.5%;
+                height: 100%;
+              }
+              .ThickButton{
+                width: 67.5%;
+                height: 100%;
+              }
+            }
           }
         }
         .MiddleRow{
           width: 100%;
-          height: 39%;
+          height: 38%;
           display: flex;
+          .MiddleMain{
+            width: 90%;
+            height: 100%;
+            display: block;
+            .ThinRow{
+              width: 100%;
+              height: 19%;
+              display: flex;
+              .ButtonPair{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                .ThinButton{
+                  width: 45%;
+                  height: 100%;
+                }
+                .ThickButton{
+                  width: 55%;
+                  height: 100%;
+                }
+              }
+            }
+            .ThickRow{
+              width: 100%;
+              height: 62%;
+              display: flex;
+              .ButtonPair{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                .ThinButton{
+                  width: 45%;
+                  height: 100%;
+                }
+                .ThickButton{
+                  width: 55%;
+                  height: 100%;
+                }
+              }
+            }
+          }
+          .MiddleRight{
+            width: 10%;
+            height: 100%;
+            display: block;
+            .ThinRow{
+              width: 100%;
+              height: 19%;
+              display: flex;
+              .ThinButton{
+                width: 35%;
+                height: 100%;
+              }
+              .ThickButton{
+                width: 65%;
+                height: 100%;
+              }
+            }
+            .ThickRow{
+              width: 100%;
+              height: 62%;
+              display: flex;
+              .ThinButton{
+                width: 35%;
+                height: 100%;
+              }
+              .ThickButton{
+                width: 65%;
+                height: 100%;
+              }
+            }
+          }
         }
         //display: grid; /* Use CSS grid to create the grid layout */
         //grid-template-columns: repeat(11, 1fr); /* Create 12 columns */
@@ -250,20 +317,28 @@
         grid-template-columns: 1fr;
         width: 7.15%;
         height: 100%;
+        padding: 1% 0% 1% 0%;
       }    
     }
     .SecondPart{
       width: 85%;
-      height: 34%;
+      height: 30.5%;
       margin: 0% 7.5% 0% 7.5%;
       button{
         background-color: transparent;
         border: none;
         margin: 0;
         padding: 0;
+        justify-content: center;
+        align-items: center;
         &:hover{
           cursor: pointer;
-          background-color: rgba(255, 255, 255, 0.25);
+          //background-color: rgba(255, 255, 255, 0.25);
+        }
+        img{
+          width: 2rem;
+          height: 2rem;
+
         }
       }
       .FirstSubpart{
@@ -271,7 +346,7 @@
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(1, auto);
         width: 100%;
-        height: 50%;
+        height: 47%;
         margin: 0;
         padding: 0;
       }
@@ -280,7 +355,7 @@
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: repeat(1, auto);
         width: 100%;
-        height: 50%;
+        height: 53%;
         margin: 0;
         padding: 0;     
       }
@@ -290,7 +365,7 @@
     position: relative;
     height: 20%;
     width: 100%;
-    margin: 1% 0% 0% 0%;
+    margin: 0.5% 0% 0% 0%;
     .Chips{
       width: 80%;
       height: 65%;
@@ -317,28 +392,43 @@
           background-color: rgba(0, 0, 0, 0.2);
         }
       }
+      button.clicked{
+        background-color: rgba(0, 0, 0, 0.2);
+      }
       
     }
     .ManageChips{
       margin:0.5% auto 0.5% auto;
-      width: 40%;
+      width: 100%;
       height: 29%;
-    button{
-      width:29%;
-      height: 100%;
-      margin: 0% 2% 0% 2%;
-      background-color: #970202;
-      border: 2px solid #5a0303;
-      text-transform: uppercase;
-      text-align: center;
-      text-decoration: none;
-      font-family:Merriweather Sans;
-      color: white;
-      &:hover{
-          cursor: pointer;
-          background-color: rgba(77, 0, 0, 0.8);
+      display: flex;
+      p{
+        display: flex;
+        width: 27.5%;
+        text-align:left;
+        align-items: center;
+        text-decoration: none;
+        font-family:Merriweather Sans;
+        color: white;
+        padding: 0% 2% 0% 2%;
+        margin:0;
       }
-    }
+      button{
+        width:15%;
+        height: 100%;
+        margin: 0% 2% 0% 2%;
+        background-color: #970202;
+        border: 2px solid #5a0303;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        font-family:Merriweather Sans;
+        color: white;
+        &:hover{
+            cursor: pointer;
+            background-color: rgba(77, 0, 0, 0.8);
+        }
+      }
     }
   }
 

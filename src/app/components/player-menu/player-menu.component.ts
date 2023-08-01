@@ -303,7 +303,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     else console.log("Table is full");
     
   }
-  private scrollToBottom() {
+  scrollToBottom() {
     this.newMessage = '';
     const chatMessagesEl = this.chatMessagesRef.nativeElement;
     chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;

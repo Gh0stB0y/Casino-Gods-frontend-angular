@@ -24,7 +24,7 @@ export class WarComponent implements OnInit,OnDestroy {
 
   @ViewChild('chatMessages',{static:false})chatMessagesRef!: ElementRef;
   
-  constructor(private playersService: PlayersServicesService,private TableService:TableServiceService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
+  constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
     private appComponent:AppComponent){
       this.messages=[];
     }
