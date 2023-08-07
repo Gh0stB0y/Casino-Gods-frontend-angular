@@ -1,6 +1,8 @@
   <div class="Background">
     <div class="return">
-      <button class="returnButton" (click)="Return()">Return</button>
+      <div class="BetNow"><button  (click)="SendBets()">Play Now</button></div>
+      <div class="BetsTime"[style.background-color]="BetsbackgroundColor">{{CurrentBetInfo}}</div>
+      <div class="returnButton"><button  (click)="Return()">Return</button></div>
     </div>
     <div class="GameInfo">
       <p>Bets placed:</p>
@@ -144,7 +146,7 @@
         <button (click)="Undo()">Undo</button>
         <button (click)="Repeat()">Repeat</button>
         <button (click)="Double()">Double</button>
-        <p>Board coverage: </p>
+        <p>Board coverage: TBA </p>
       </div>
     </div>
   </div>

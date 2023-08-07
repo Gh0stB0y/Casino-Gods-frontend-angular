@@ -49,7 +49,12 @@
             <span [style.color]="TableMessage.text2Color">{{ TableMessage.text2 }}</span>
           </div>
         </div>
-
+        <div class="SettingButtons">
+          <button *ngIf="LobbyChatEnabled===true" (click)="ClearLobbyMessages()">Clear</button>
+          <button *ngIf="LobbyChatEnabled===false" (click)="ClearTableMessages()">Clear</button>
+          <button *ngIf="LobbyChatEnabled===true" (click)="ToggleLobbyMute()">{{MuteLobbyButtonText}}</button>
+          <button *ngIf="LobbyChatEnabled===false" (click)="ToggleTableMute()">{{MuteTableButtonText}}</button>
+        </div>
         <div class="chatInput">
         <input *ngIf="LobbyChatEnabled===true" type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message...">
         <input *ngIf="LobbyChatEnabled===false" type="text" [(ngModel)]="newMessage" (keyup.enter)="sendTableMessage()" placeholder="Type your message...">

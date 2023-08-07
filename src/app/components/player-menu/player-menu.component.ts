@@ -1,4 +1,4 @@
-import { Component,ViewChild, ElementRef,Input, OnInit,OnDestroy} from '@angular/core';
+import { Component,ViewChild, ElementRef,Input,HostListener, OnInit,OnDestroy} from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { TableInfoStrings,LobbyTableDataDTO,ChatMessages, jwt, LobbyDataInput, Player,TableData } from 'src/app/models/player.model';
@@ -39,7 +39,10 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   newMessage: string = "";
   newAuthor:string="";
   SwitchButtonText: string="Switch to table chat";
-  //SwitchButtonDisabled:boolean=true;
+  LobbyMuteState:boolean=false;
+  TableMuteState:boolean=false;
+  MuteLobbyButtonText:string="Mute";
+  MuteTableButtonText:string="Mute";
   LobbyChatEnabled:boolean=true;
 
   Arrows:boolean[]=[true,true];
@@ -47,10 +50,26 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
   DisplayedTablesMaxIterator:number=0;
   TablesInfoStrings:TableInfoStrings[]=[];
   TableDataFromServer:LobbyTableDataDTO[]=[];
+
+  private ComponentDestroyed:boolean = false;
   
   @ViewChild('chatMessages',{static:false})chatMessagesRef!: ElementRef;
-
-  
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: Event) {
+    this.TableGoback();
+    this.SignalRService.QuitLobbyListener();
+    this.SignalRService.QuitTableListener();
+    this.SignalRService.Disconnect();
+    this.ComponentDestroyed=true;
+  }
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: Event) {
+    this.TableGoback();
+    this.SignalRService.QuitLobbyListener();
+    this.SignalRService.QuitTableListener();
+    this.SignalRService.Disconnect();
+    this.ComponentDestroyed=true;
+  }
   constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
               private appComponent:AppComponent) {
     /* funkcja sprawdzajaca czy ktos jest zalogowany na tym urzadzeniu. Jesli tak to zimportuj dane  */
@@ -108,12 +127,15 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       
   }
   ngOnDestroy(): void {
+    if(!this.ComponentDestroyed){
     this.TableGoback();
     this.SignalRService.QuitLobbyListener();
+    this.SignalRService.QuitTableListener();
     this.SignalRService.Disconnect();
+    //this.playersService.logout();
+    }
     // let JWT=localStorage.getItem("jwt");
     // if(JWT)this.SignalRService.QuitTable(JWT);
-    
   }
   logOut(){
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
@@ -271,6 +293,8 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       let Author = localStorage.getItem("username");
       let JWT=localStorage.getItem("jwt");
       if(Author&&JWT)this.SignalRService.SendChatMessage(Author.toString(),this.newMessage);
+      this.messages.push({ text: Author+":",text2:this.newMessage, textColor:'red',text2Color:'white'});   
+      this.scrollToBottom();
     }
   }
   async ChooseTable(Table:LobbyTableDataDTO){
@@ -287,6 +311,8 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     if(JWT)TableNotFull=await this.SignalRService.EnterTable(Table.id,JWT.toString());
     if(TableNotFull)
     {
+    this.SwitchButtonText="Switch to lobby chat";
+    this.LobbyChatEnabled=false;
     this.TableDisplay=this.Currentgame;
     this.TableMessages=[];
     this.SignalRService.TableChatListener(
@@ -301,7 +327,20 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     });
     }
     else console.log("Table is full");
-    
+    this.SignalRService.BankrollListener(
+      (NewBankroll:string,Profit:string)=>{
+        this.bankrollToDisplay=NewBankroll;
+        this.profitToDipslay=Profit;
+        console.log(Profit);
+        let OldProfit=localStorage.getItem("profit");
+        let OldBankroll=localStorage.getItem("bankroll");
+        if(OldProfit&&OldBankroll) 
+        {     
+          console.log("chuj");
+          localStorage.setItem("profit",Profit);
+          localStorage.setItem("bankroll",NewBankroll);          
+        }                        
+    });
   }
   scrollToBottom() {
     this.newMessage = '';
@@ -321,5 +360,41 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       let JWT=localStorage.getItem("jwt");
       if(Author&&JWT)this.SignalRService.TableChatMessage(Author.toString(),this.newMessage);
     
+  }
+  ClearTableMessages(){
+    this.TableMessages=[];
+  }
+  ClearLobbyMessages(){
+    this.messages=[];
+  }
+  ToggleLobbyMute(){
+    this.LobbyMuteState=!this.LobbyMuteState;
+   if(this.LobbyMuteState){
+    this.MuteLobbyButtonText="Unmute";
+    this.SignalRService.MuteLobbyChat();
+   }
+   else{
+    this.MuteLobbyButtonText="Mute";
+    this.SignalRService.LobbyListener(
+      (username:string,message:string)=>{
+        this.messages.push({ text: username+":",text2:message, textColor:'red',text2Color:'white'});   
+        this.scrollToBottom();
+    });
+   } 
+  }
+  ToggleTableMute(){
+    this.TableMuteState=!this.TableMuteState;
+    if(this.TableMuteState){
+      this.MuteTableButtonText="Unmute";
+      this.SignalRService.MuteTableChat();
+    }
+    else{
+      this.MuteTableButtonText="Mute";
+      this.SignalRService.TableChatListener(
+        (username:string,message:string)=>{
+          this.TableMessages.push({ text: username+":",text2:message, textColor:'red',text2Color:'white'});   
+          this.scrollToBottom();
+      });
+    } 
   }
 }

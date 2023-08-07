@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component ,HostListener,Renderer2 } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-root',
@@ -23,8 +23,17 @@ export class AppComponent {
 
   WideWrapper:boolean=false;
 
-  constructor(private cookieService:CookieService){
+  constructor(private cookieService:CookieService,private renderer: Renderer2){
+    
   }
+  @HostListener('window:load', ['$event'])
+    onWindowLoad(event: Event) {
+      const docElement = document.documentElement;
+  
+      if (docElement.requestFullscreen) {
+        docElement.requestFullscreen();
+      }
+    }
   ToggleWrapperWidth(){
   this.WideWrapper=!this.WideWrapper;
   }

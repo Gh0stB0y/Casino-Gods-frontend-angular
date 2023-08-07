@@ -10,18 +10,38 @@
     overflow: hidden;
   }
   .return {
-    width: 100%;
+    width: 95%;
     height: 5%;
-    margin: 0% 0% 0% 0%;
+    margin: 0% 2.5% 0% 2.5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, auto);
+    text-align: left;
+    text-decoration: none;
+    font-family:Merriweather Sans;
+    color: white;
     .returnButton 
     {
-      position: relative;
+      padding-left: 50%;
       top: 0;
       right: 0;
       margin: 0;
-      width: 25%;
+      width: 100%;
     }
-      
+    .BetNow{
+      padding-right: 50%;
+      width: 100%;
+      height: auto;
+    }
+    .BetsTime{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      text-align: center;
+      width: 100%;
+      height: auto;
+     // background-color: #DEC20B;
+    }
     button
     {
       width:100%;

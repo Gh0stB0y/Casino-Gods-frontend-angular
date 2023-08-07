@@ -87,7 +87,6 @@ export class SignalRService {
   }
   public async EnterTable(TableId:string,jwt:string):Promise<boolean>{
     const result:boolean = await this.hubConnection?.invoke('EnterTable',TableId,jwt);
-    // this.hubConnection?.invoke('EnterTable',TableId,jwt);
     return result;
   }
   public JwtUpdate(callback: (report:string) => void): void{
@@ -109,8 +108,36 @@ export class SignalRService {
   public QuitTableListener(){
     this.hubConnection.off('TableChatMessages');
     this.hubConnection.off('TableChatReports');
+    this.hubConnection.off("ToggleBetting");
+    this.hubConnection.off("Win");
+    //this.hubConnection.off("Bankroll");
   }
   public Disconnect(){
     this.hubConnection?.stop();
+  }
+  public MuteLobbyChat(){
+    this.hubConnection.off('ChatMessages');
+  }
+  public MuteTableChat(){
+    this.hubConnection.off('TableChatMessages');
+  }
+  public async IsBettingEnabled():Promise<boolean>{
+    const result:boolean=await this.hubConnection.invoke("IsBettingEnabled");
+    return result;
+  }
+  public BettingEnabledListener(callback:(IsEnabled:boolean,closedBetsToken:string)=>void):void{
+    this.hubConnection.on("ToggleBetting",callback);
+  }
+  public BetsAreClosingListener(callback:()=>void):void{
+    this.hubConnection.on("BetsAreClosing",callback);
+  }
+  public SendBets(Bets:number[],jwt:string,closedBetsToken:string){
+    this.hubConnection.invoke("SendBets",Bets,jwt,closedBetsToken);    
+  }
+  public WinListener(callback:(WinReport:string,WinValue:number)=>void){
+    this.hubConnection.on("Win",callback);
+  }
+  public BankrollListener(callback:(NewBankroll:string,Profit:string)=>void){
+    this.hubConnection.on("Bankroll",callback);
   }
 }

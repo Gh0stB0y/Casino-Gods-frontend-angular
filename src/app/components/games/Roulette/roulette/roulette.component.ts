@@ -8,6 +8,7 @@ import { TableServiceService } from 'src/app/services/table-service.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { PlayerMenuComponent } from 'src/app/components/player-menu/player-menu.component';
 import { HttpClient } from '@angular/common/http';
+import { delay } from 'rxjs';
 @Component({
   selector: 'app-roulette',
   templateUrl: './roulette.component.html',
@@ -27,7 +28,7 @@ export class RouletteComponent implements OnInit,OnDestroy{
   BetImagePath:string='../../../../../assets/images/TotalBetChip.png';
 
   loopRange: number[] = Array(11).fill(0).map((_, index) => index)
-
+  BetsEnabled:boolean=false;
   PreviousBets:number[]=[];
   Bets:number[]=[];
   CurrentBetsInfo:string="";
@@ -36,6 +37,11 @@ export class RouletteComponent implements OnInit,OnDestroy{
   IsClicked:boolean[]=[];
   TotalBet:number=0;
   space:string='      ';
+  ColorsArray:string[]=["#009A17","#DBA800","#E10600"]
+  BetsTimingInfo:string[]=["Bets are open","Bets are closing","No more bets"]
+  CurrentBetInfo:string="Wait for the next round";
+  BetsbackgroundColor:string=this.ColorsArray[2];
+  ShowAnimation:boolean=false;
   @ViewChild('chatMessages',{static:false})chatMessagesRef!: ElementRef;
   
   constructor(private playersService: PlayersServicesService,private router:Router,private appmodule:AppModule,private SignalRService:SignalRService,
@@ -51,12 +57,42 @@ export class RouletteComponent implements OnInit,OnDestroy{
         this.BetDescription = data.split('\n').filter(item => item.trim() !== '');
       });
     }
-  ngOnInit():void
+  async ngOnInit():Promise<void>
   {
-
+    this.SignalRService.BettingEnabledListener(
+      (IsEnabled:boolean,closedBetsToken:string)=>{
+        this.BetsEnabled=IsEnabled;
+        if(IsEnabled)//de facto start nowej gierki, rozpoczynajac od fazy betowania
+        {
+          for(let i=0;i<this.Bets.length;i++)this.Bets[i]=0;this.TotalBet=0; this.CurrentBetsInfo="";   
+          this.CurrentBetInfo=this.BetsTimingInfo[0];    
+          this.BetsbackgroundColor=  this.ColorsArray[0];
+          this.ShowAnimation=false;
+        }
+        else //de facto zakonczenie fazy betowania
+        {
+          this.PreviousBets=this.Bets;
+          this.CurrentBetInfo=this.BetsTimingInfo[2];
+          this.BetsbackgroundColor=  this.ColorsArray[2];
+          let JWT=localStorage.getItem("jwt");
+          if(JWT)this.SignalRService.SendBets(this.Bets,JWT,closedBetsToken);
+          this.ShowAnimation=true;
+        }
+    });
+    this.SignalRService.BetsAreClosingListener(
+      ()=>{
+        if(this.CurrentBetInfo!="Wait for the next round"){
+        this.CurrentBetInfo=this.BetsTimingInfo[1];
+        this.BetsbackgroundColor=  this.ColorsArray[1];
+        }
+    });
+    this.SignalRService.WinListener(
+      (WinReport:string,WinValue:number)=>{
+        this.playerMenu.TableMessages.push({ text: WinReport,text2:"", textColor:'grey',text2Color:'white'});   
+        this.playerMenu.scrollToBottom();
+    });
   }
   ngOnDestroy(): void {
-
   }
   sendMessage() {
     if (this.newMessage.trim() !== '') {
@@ -65,10 +101,13 @@ export class RouletteComponent implements OnInit,OnDestroy{
     }
   }
   Return(){
+    
     this.playerMenu.TableGoback();
+    
+    //this.LeaveTableWarning();
   }
   AddBet(Index:number){
-    if(this.CurrentCoin>0){
+    if(this.CurrentCoin>0&&this.BetsEnabled){
       let cash=localStorage.getItem("bankroll");
       let minBet=localStorage.getItem("TableMinBet");
       let maxBet=localStorage.getItem("TableMaxBet");
@@ -89,7 +128,7 @@ export class RouletteComponent implements OnInit,OnDestroy{
   SubstractBet(Index:number,event:MouseEvent){
     event.preventDefault();
     let minBet=localStorage.getItem("TableMinBet");
-    if(this.CurrentCoin>0&&minBet&&this.Bets[Index]>0){
+    if(this.CurrentCoin>0&&minBet&&this.Bets[Index]>0&&this.BetsEnabled){
         if(this.Bets[Index]-this.CurrentCoin>=parseFloat(minBet)){
           this.UpdateBetsInfoSubstract(Index,this.Bets[Index]);
           this.TotalBet-=this.CurrentCoin;
@@ -107,7 +146,7 @@ export class RouletteComponent implements OnInit,OnDestroy{
   }
   SubstractBetSpecial(Index:number){
     let minBet=localStorage.getItem("TableMinBet");
-    if(this.CurrentCoin>0&&minBet&&this.Bets[Index]>0){
+    if(this.CurrentCoin>0&&minBet&&this.Bets[Index]>0&&this.BetsEnabled){
         if(this.Bets[Index]-this.CurrentCoin>=parseFloat(minBet)){
           this.UpdateBetsInfoSubstract(Index,this.Bets[Index]);
           this.TotalBet-=this.CurrentCoin;
@@ -134,98 +173,120 @@ export class RouletteComponent implements OnInit,OnDestroy{
     }
   }
   VoisinsDuZero(){
-    let cash=localStorage.getItem("bankroll");
-    if(cash&&parseFloat(cash)>=9*this.CurrentCoin+this.TotalBet){
+    if(this.BetsEnabled){
+      let cash=localStorage.getItem("bankroll");
+      if(cash&&parseFloat(cash)>=9*this.CurrentCoin+this.TotalBet){
 
-      let arr:number[]=[63,41,43,68,60,121,121,142,142];
-      for(let i=0;i<arr.length;i++){
-        this.UpdateBetsInfoAdd(arr[i],this.Bets[arr[i]]);
-        this.Bets[arr[i]]+=this.CurrentCoin;
+        let arr:number[]=[63,41,43,68,60,121,121,142,142];
+        for(let i=0;i<arr.length;i++){
+          this.UpdateBetsInfoAdd(arr[i],this.Bets[arr[i]]);
+          this.Bets[arr[i]]+=this.CurrentCoin;
+        }
+        this.TotalBet+=9*this.CurrentCoin;
       }
-      this.TotalBet+=9*this.CurrentCoin;
-    }
-    else{
-      this.BrokeError();
+      else{
+        this.BrokeError();
+      }
     }
   }
   SubstractVoisinsDuZero(event:MouseEvent){
     event.preventDefault();
-    let arr:number[]=[63,41,43,68,60,121,121,142,142];
-    for (let i=0;i<arr.length;i++){
-      this.SubstractBetSpecial(arr[i]);
-    }
+      if(this.BetsEnabled){
+      let arr:number[]=[63,41,43,68,60,121,121,142,142];
+      for (let i=0;i<arr.length;i++){
+        this.SubstractBetSpecial(arr[i]);
+      }
+    } 
   }
   OrphellinsDuPlein(){
-    let cash=localStorage.getItem("bankroll");
-    if(cash&&parseFloat(cash)>=8*this.CurrentCoin+this.TotalBet){
-      let arr:number[]=[1,6,9,14,17,20,31,34];
-      for(let i=0;i<arr.length;i++){
-        this.UpdateBetsInfoAdd(arr[i],this.Bets[arr[i]]);
-        this.Bets[arr[i]]+=this.CurrentCoin;
+    if(this.BetsEnabled){
+      let cash=localStorage.getItem("bankroll");
+      if(cash&&parseFloat(cash)>=8*this.CurrentCoin+this.TotalBet){
+        let arr:number[]=[1,6,9,14,17,20,31,34];
+        for(let i=0;i<arr.length;i++){
+          this.UpdateBetsInfoAdd(arr[i],this.Bets[arr[i]]);
+          this.Bets[arr[i]]+=this.CurrentCoin;
+        }
+        this.TotalBet+=8*this.CurrentCoin;
       }
-      this.TotalBet+=8*this.CurrentCoin;
-    }
-    else{
-      this.BrokeError();
+    
+      else{
+        this.BrokeError();
+      }
     }
   }
   SubstractOrphellinsDuPlein(event:MouseEvent){
     event.preventDefault();
-    let arr:number[]=[1,6,9,14,17,20,31,34];
-    for(let i=0;i<arr.length;i++){
-      this.SubstractBetSpecial(arr[i]);
+    if(this.BetsEnabled){
+      let arr:number[]=[1,6,9,14,17,20,31,34];
+      for(let i=0;i<arr.length;i++){
+        this.SubstractBetSpecial(arr[i]);
+      }
     }
   }
   TiersDuCylindre(){
-    let cash=localStorage.getItem("bankroll");
-
-    if(cash&&parseFloat(cash)>=6*this.CurrentCoin+this.TotalBet){
-      let arr:number[]=[51,100,66,92,46,48];
-      for(let i=0;i<arr.length;i++){
-        this.UpdateBetsInfoAdd(arr[i],this.Bets[arr[i]]);
-        this.Bets[arr[i]]+=this.CurrentCoin;
+    if(this.BetsEnabled){
+      let cash=localStorage.getItem("bankroll");
+      if(cash&&parseFloat(cash)>=6*this.CurrentCoin+this.TotalBet){
+        let arr:number[]=[51,100,66,92,46,48];
+        for(let i=0;i<arr.length;i++){
+          this.UpdateBetsInfoAdd(arr[i],this.Bets[arr[i]]);
+          this.Bets[arr[i]]+=this.CurrentCoin;
+        }
+        this.TotalBet+=6*this.CurrentCoin;
       }
-      this.TotalBet+=6*this.CurrentCoin;
-    }
-    else{
-      this.BrokeError();
+      else{
+        this.BrokeError();
+      }
     }
   }
   SubstractTiersDuCylindre(event:MouseEvent){
     event.preventDefault();
-    let arr:number[]=[51,100,66,92,46,48];
-    for(let i=0;i<arr.length;i++){
-      this.SubstractBetSpecial(arr[i]);
+    if(this.BetsEnabled){
+      let arr:number[]=[51,100,66,92,46,48];
+      for(let i=0;i<arr.length;i++){
+        this.SubstractBetSpecial(arr[i]);
+      }
     }
   }
   SendBets(){
+    if(this.BetsEnabled){
     this.PreviousBets=this.Bets;
-
+    let JWT=localStorage.getItem("jwt");
+    if(JWT)this.SignalRService.SendBets(this.Bets,JWT,"");
+    this.BetsEnabled=false;
+    }
   }
   Repeat(){
-    let cash=localStorage.getItem("bankroll");
-    let sum = this.PreviousBets.reduce((acc, curr) => acc + curr, 0);
-    if(cash&&sum<=parseFloat(cash)){
-      this.Bets=this.PreviousBets;
-      this.TotalBet=sum;
-    }
-    else{
-      this.BrokeError();
+    if(this.BetsEnabled){
+      let cash=localStorage.getItem("bankroll");
+      let sum = this.PreviousBets.reduce((acc, curr) => acc + curr, 0);
+      if(cash&&sum<=parseFloat(cash)){
+        this.Bets=this.PreviousBets;
+        this.TotalBet=sum;
+      }
+      else{
+        this.BrokeError();
+      }
     }
   }
   Double(){
-    let cash=localStorage.getItem("bankroll");
-    let sum = this.PreviousBets.reduce((acc, curr) => acc + curr, 0);
-    if(cash&&2*sum<=parseFloat(cash)){
-      for(let i=0;i<this.Bets.length;i++)this.Bets[i]=2*this.PreviousBets[i];
-      this.TotalBet=2*sum;
-    }
-    else{
-      this.BrokeError();
+    if(this.BetsEnabled){
+      let cash=localStorage.getItem("bankroll");
+      let sum = this.PreviousBets.reduce((acc, curr) => acc + curr, 0);
+      if(cash&&2*sum<=parseFloat(cash)){
+        for(let i=0;i<this.Bets.length;i++)this.Bets[i]=2*this.PreviousBets[i];
+        this.TotalBet=2*sum;
+      }
+      else{
+        this.BrokeError();
+      }
     }
   }
   Undo(){
-    for(let i=0;i<this.Bets.length;i++)this.Bets[i]=0;this.TotalBet=0; this.CurrentBetsInfo="";
+    if(this.BetsEnabled){
+      for(let i=0;i<this.Bets.length;i++)this.Bets[i]=0;this.TotalBet=0; this.CurrentBetsInfo="";
+    }
   }
   BrokeError(){
     if(this.playerMenu.LobbyChatEnabled){
@@ -284,5 +345,12 @@ export class RouletteComponent implements OnInit,OnDestroy{
         }
       }
     }  
+  }
+  async IsBettingEnabled(){
+    return await this.SignalRService.IsBettingEnabled();
+  }
+  LeaveTableWarning(){
+
+
   }
 }

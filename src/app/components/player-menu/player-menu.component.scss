@@ -240,7 +240,7 @@
     margin: 0;
 
     .chatMessages{
-        height: 85%;
+        height: 80%;
         text-align: left;
         text-decoration: none;
         font-family:Merriweather Sans;
@@ -261,10 +261,24 @@
             border-radius:4px;
           }
     }
+    .SettingButtons{
+        height: 4%;
+        margin: 0% 0% 1% 5%;
+        display: flex;
+        button{
+            width: 50%;
+        }
+    }
     
     .chatInput{
         height: 7.5%;
         margin: 0% 0% 0% 5%;
+        button{
+            width:25%
+        }
+        input{
+            width: 75%;
+        }
     }
     .chatSwitchButtons{
         height: 5%;

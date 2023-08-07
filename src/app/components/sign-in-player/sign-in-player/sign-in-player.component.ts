@@ -29,7 +29,8 @@ signIn(){
         
         localStorage.setItem('username', sign_player.username);
         localStorage.setItem('bankroll', JSON.stringify(sign_player.bankroll));
-        localStorage.setItem('profit',JSON.stringify(sign_player.profit));
+        //localStorage.setItem('profit',JSON.stringify(sign_player.profit));
+        localStorage.setItem('profit',"0");
         localStorage.setItem('jwt', sign_player.jwt);
         localStorage.setItem('isLoggedIn',"true");
         this.router.navigate(['playerMenu']);
