@@ -29,8 +29,8 @@ export class RouletteComponent implements OnInit,OnDestroy{
 
   loopRange: number[] = Array(11).fill(0).map((_, index) => index)
   BetsEnabled:boolean=false;
-  PreviousBets:number[]=[];
   Bets:number[]=[];
+  PreviousBets:number[]=[];
   CurrentBetsInfo:string="";
   BetDescription:string[]=[];
   CurrentCoin:number=0;
@@ -49,8 +49,8 @@ export class RouletteComponent implements OnInit,OnDestroy{
       this.messages=[];
       this.TotalBet=0;
       for (let i=0;i<157;i++)this.Bets.push(0);
+      for (let i=0;i<157;i++)this.PreviousBets.push(0);
       for (let i=0;i<7;i++)this.IsClicked.push(false);
-      this.PreviousBets=this.Bets;
       this.CurrentBetsInfo="";
       this.http.get('assets/BetsDescription.txt', { responseType: 'text' })
       .subscribe(data => {
@@ -63,15 +63,14 @@ export class RouletteComponent implements OnInit,OnDestroy{
       (IsEnabled:boolean,closedBetsToken:string)=>{
         this.BetsEnabled=IsEnabled;
         if(IsEnabled)//de facto start nowej gierki, rozpoczynajac od fazy betowania
-        {
+        {          
           for(let i=0;i<this.Bets.length;i++)this.Bets[i]=0;this.TotalBet=0; this.CurrentBetsInfo="";   
           this.CurrentBetInfo=this.BetsTimingInfo[0];    
-          this.BetsbackgroundColor=  this.ColorsArray[0];
+          this.BetsbackgroundColor=this.ColorsArray[0];
           this.ShowAnimation=false;
         }
         else //de facto zakonczenie fazy betowania
-        {
-          this.PreviousBets=this.Bets;
+        {          
           this.CurrentBetInfo=this.BetsTimingInfo[2];
           this.BetsbackgroundColor=  this.ColorsArray[2];
           let JWT=localStorage.getItem("jwt");
@@ -251,36 +250,45 @@ export class RouletteComponent implements OnInit,OnDestroy{
   }
   SendBets(){
     if(this.BetsEnabled){
-    this.PreviousBets=this.Bets;
     let JWT=localStorage.getItem("jwt");
-    if(JWT)this.SignalRService.SendBets(this.Bets,JWT,"");
+    if(JWT){
+      this.SignalRService.SendBets(this.Bets,JWT,"");
+      localStorage.setItem('PreviousBets', JSON.stringify(this.Bets));
+      //for(let i=0;i<this.Bets.length;i++)this.PreviousBets[i]=this.Bets[i];
+    }
     this.BetsEnabled=false;
     }
   }
   Repeat(){
     if(this.BetsEnabled){
+      const PreviousBetsArray=localStorage.getItem('PreviousBets');
       let cash=localStorage.getItem("bankroll");
-      let sum = this.PreviousBets.reduce((acc, curr) => acc + curr, 0);
-      if(cash&&sum<=parseFloat(cash)){
-        this.Bets=this.PreviousBets;
-        this.TotalBet=sum;
+      if(cash&&PreviousBetsArray){
+        this.PreviousBets = JSON.parse(PreviousBetsArray);
+        let sum = this.PreviousBets.reduce((acc, currentValue) => acc + currentValue, 0);
+        if(sum<=parseInt(cash,10)){
+          this.Bets=this.PreviousBets;
+          this.TotalBet=sum;
+        }
+        else this.BrokeError();       
       }
-      else{
-        this.BrokeError();
-      }
+      
     }
   }
   Double(){
     if(this.BetsEnabled){
+      const PreviousBetsArray=localStorage.getItem('PreviousBets');
       let cash=localStorage.getItem("bankroll");
-      let sum = this.PreviousBets.reduce((acc, curr) => acc + curr, 0);
-      if(cash&&2*sum<=parseFloat(cash)){
-        for(let i=0;i<this.Bets.length;i++)this.Bets[i]=2*this.PreviousBets[i];
-        this.TotalBet=2*sum;
+      if(cash&&PreviousBetsArray){
+        this.PreviousBets = JSON.parse(PreviousBetsArray);
+        let sum = this.PreviousBets.reduce((acc, currentValue) => acc + currentValue, 0);
+        if(2*sum<=parseInt(cash,10)){
+          for(let i=0;i<this.Bets.length;i++)this.Bets[i]=2*this.PreviousBets[i];
+          this.TotalBet=2*sum;
+        }
+        else this.BrokeError();       
       }
-      else{
-        this.BrokeError();
-      }
+      
     }
   }
   Undo(){

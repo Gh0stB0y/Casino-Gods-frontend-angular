@@ -331,12 +331,10 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       (NewBankroll:string,Profit:string)=>{
         this.bankrollToDisplay=NewBankroll;
         this.profitToDipslay=Profit;
-        console.log(Profit);
         let OldProfit=localStorage.getItem("profit");
         let OldBankroll=localStorage.getItem("bankroll");
         if(OldProfit&&OldBankroll) 
         {     
-          console.log("chuj");
           localStorage.setItem("profit",Profit);
           localStorage.setItem("bankroll",NewBankroll);          
         }                        
