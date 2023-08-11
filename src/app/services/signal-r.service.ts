@@ -110,6 +110,7 @@ export class SignalRService {
     this.hubConnection.off('TableChatReports');
     this.hubConnection.off("ToggleBetting");
     this.hubConnection.off("Win");
+    this.hubConnection.off("Cards");
     //this.hubConnection.off("Bankroll");
   }
   public Disconnect(){
@@ -139,5 +140,9 @@ export class SignalRService {
   }
   public BankrollListener(callback:(NewBankroll:string,Profit:string)=>void){
     this.hubConnection.on("Bankroll",callback);
+  }
+
+  public DragonTigerCards(callback:(Cards:number[],report:string)=>void){
+    this.hubConnection.on("Cards",callback);
   }
 }

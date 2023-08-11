@@ -7,7 +7,6 @@ import { PlayersListComponent } from './components/players/players-list/players-
 import { RecoveryComponent } from './components/recovery/recovery.component';
 import { SignInPlayerComponent } from './components/sign-in-player/sign-in-player/sign-in-player.component';
 import { BacarratComponent } from './components/games/Bacarrat/bacarrat/bacarrat.component';
-import {DragonTigerComponent} from './components/games/Dragon Tiger/dragon-tiger/dragon-tiger.component'
 import {RouletteComponent} from './components/games/Roulette/roulette/roulette.component'
 import { WarComponent } from './components/games/War/war/war.component';
 import { BlackjackComponent } from './components/games/Blackjack/blackjack/blackjack.component';
@@ -22,7 +21,6 @@ const routes: Routes = [
   {path:'playerMenu',component:PlayerMenuComponent},
   {path:'Bacarrat',component:BacarratComponent},
   {path:'Blackjack',component:BlackjackComponent},
-  {path:'Dragon Tiger',component:DragonTigerComponent},
   {path:'Roulette',component:RouletteComponent},
   {path:'War',component:WarComponent}
 ];

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DragonTigerComponent } from './dragon-tiger.component';
+import { DragonComponent } from './dragon.component';
 
-describe('DragonTigerComponent', () => {
-  let component: DragonTigerComponent;
-  let fixture: ComponentFixture<DragonTigerComponent>;
+describe('DragonComponent', () => {
+  let component: DragonComponent;
+  let fixture: ComponentFixture<DragonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DragonTigerComponent ]
+      declarations: [ DragonComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DragonTigerComponent);
+    fixture = TestBed.createComponent(DragonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

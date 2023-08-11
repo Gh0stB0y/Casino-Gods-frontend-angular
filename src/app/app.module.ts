@@ -18,10 +18,10 @@ import { PlayersServicesService } from 'src/app/services/players-services.servic
 import { take } from 'rxjs/operators';
 import { isObservable, Observable } from 'rxjs';
 import { BacarratComponent } from './components/games/Bacarrat/bacarrat/bacarrat.component';
-import { DragonTigerComponent } from './components/games/Dragon Tiger/dragon-tiger/dragon-tiger.component';
 import { RouletteComponent } from './components/games/Roulette/roulette/roulette.component';
 import { WarComponent } from './components/games/War/war/war.component';
 import { BlackjackComponent } from './components/games/Blackjack/blackjack/blackjack.component';
+import { DragonComponent } from './components/games/Dragon/dragon/dragon.component';
 
 
 
@@ -35,10 +35,10 @@ import { BlackjackComponent } from './components/games/Blackjack/blackjack/black
     RecoveryComponent,
     PlayerMenuComponent,
     BacarratComponent,
-    DragonTigerComponent,
     RouletteComponent,
     WarComponent,
     BlackjackComponent,
+    DragonComponent,
 
     
   ],

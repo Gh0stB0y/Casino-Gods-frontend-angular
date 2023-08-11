@@ -314,6 +314,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     this.SwitchButtonText="Switch to lobby chat";
     this.LobbyChatEnabled=false;
     this.TableDisplay=this.Currentgame;
+    console.log(this.TableDisplay);
     this.TableMessages=[];
     this.SignalRService.TableChatListener(
       (username:string,message:string)=>{

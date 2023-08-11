@@ -283,7 +283,16 @@ export class RouletteComponent implements OnInit,OnDestroy{
         this.PreviousBets = JSON.parse(PreviousBetsArray);
         let sum = this.PreviousBets.reduce((acc, currentValue) => acc + currentValue, 0);
         if(2*sum<=parseInt(cash,10)){
-          for(let i=0;i<this.Bets.length;i++)this.Bets[i]=2*this.PreviousBets[i];
+          let minBet=localStorage.getItem("TableMinBet");
+          let maxBet=localStorage.getItem("TableMaxBet");
+          for(let i=0;i<this.Bets.length;i++){
+            
+           if(maxBet&&minBet){
+              if(2*this.PreviousBets[i]<=parseInt(maxBet,10)){this.Bets[i]=2*this.PreviousBets[i];}
+              else {this.tooMuch(); return;}
+            }
+            console.log("local storage error");
+          }
           this.TotalBet=2*sum;
         }
         else this.BrokeError();       
