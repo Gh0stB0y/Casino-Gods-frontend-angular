@@ -13,6 +13,28 @@ import{TableServiceService} from 'src/app/services/table-service.service';
   styleUrls: ['./blackjack.component.scss']
 })
 export class BlackjackComponent implements OnInit,OnDestroy {
+Double() {
+throw new Error('Method not implemented.');
+}
+Repeat() {
+throw new Error('Method not implemented.');
+}
+Undo() {
+throw new Error('Method not implemented.');
+}
+TotalBet: any;
+SwitchCoin(arg0: number,arg1: number) {
+throw new Error('Method not implemented.');
+}
+IsClicked: any;
+Return() {
+throw new Error('Method not implemented.');
+}
+BetsbackgroundColor: any;
+CurrentBetInfo: any;
+SendBets() {
+throw new Error('Method not implemented.');
+}
 
   unameToDisplay:any=localStorage.getItem("username");
   bankrollToDisplay:any=localStorage.getItem("bankroll");
