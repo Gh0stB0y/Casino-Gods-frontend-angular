@@ -134,7 +134,6 @@ export class DragonComponent implements OnInit{
         this.PreviousBets = JSON.parse(PreviousBetsArray);
         let sum = this.PreviousBets.reduce((acc, currentValue) => acc + currentValue, 0);
         if(sum<=parseInt(cash,10)){
-          console.log("CHUJ");
           this.Bets=this.PreviousBets;
           this.TotalBet=sum;
           for (let i=0;i<this.Bets.length;i++){
@@ -243,34 +242,6 @@ export class DragonComponent implements OnInit{
         }
     }
   }
-  // UpdateBetsInfoAdd(Index:number,Val:number){
-  //   if(this.CurrentCoin>0){
-  //   if(Val>0){
-  //     console.log("Val: "+Val);
-  //     let newString=this.CurrentBetsInfo.replace(this.BetDescription[Index]+Val,this.BetDescription[Index] + (Val + this.CurrentCoin));
-  //     this.CurrentBetsInfo=newString;
-  //   }
-  //   else{
-  //     let stringToAdd:string=this.BetDescription[Index] + (Val + this.CurrentCoin)+this.space;
-  //     this.CurrentBetsInfo+=stringToAdd;
-  //   }
-  //   }
-  // }
-  // UpdateBetsInfoSubstract(Index:number,Val:number){
-  //   if(this.CurrentCoin>0){
-  //     console.log("Val: "+Val+" Coin: "+this.CurrentCoin);
-  //     if(Val>0){
-  //       if(Val>this.CurrentCoin){
-  //         let newString=this.CurrentBetsInfo.replace(this.BetDescription[Index]+Val,this.BetDescription[Index] + (Val - this.CurrentCoin));
-  //         this.CurrentBetsInfo=newString;
-  //       }
-  //       else {
-  //         let newString=this.CurrentBetsInfo.replace(this.BetDescription[Index]+Val+this.space,"");
-  //         this.CurrentBetsInfo=newString;
-  //       }
-  //     }
-  //   }  
-  // }
   tooMuch() {
     if(this.playerMenu.LobbyChatEnabled){
       this.playerMenu.messages.push({ text:"ERROR: ",text2:"Too big bet", textColor:'red',text2Color:'red'});

@@ -116,7 +116,6 @@ export class RouletteComponent implements OnInit,OnDestroy{
           this.UpdateBetsInfoAdd(Index,this.Bets[Index]);
           this.TotalBet+=this.CurrentCoin;
           this.Bets[Index]+=this.CurrentCoin;
-          console.log("Bets["+Index+"]: "+this.Bets[Index]);
         }
         else{this.BrokeError();}
       }
@@ -291,7 +290,6 @@ export class RouletteComponent implements OnInit,OnDestroy{
               if(2*this.PreviousBets[i]<=parseInt(maxBet,10)){this.Bets[i]=2*this.PreviousBets[i];}
               else {this.tooMuch(); return;}
             }
-            console.log("local storage error");
           }
           this.TotalBet=2*sum;
         }

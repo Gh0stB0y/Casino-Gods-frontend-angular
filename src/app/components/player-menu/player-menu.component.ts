@@ -137,7 +137,8 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
     // let JWT=localStorage.getItem("jwt");
     // if(JWT)this.SignalRService.QuitTable(JWT);
   }
-  logOut(){
+  logOut()
+  {
     /* FUNKCJA: wroc do login-menu, zwolnij miejsce na tym komputerze, i na biezacym koncie */
     this.jwtStorage=localStorage.getItem("jwt");
     if(this.jwtStorage!=null){
@@ -271,6 +272,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
       }
     });      
     this.Currentgame=gameType;
+    this.DisplayedTablesCurrentIterator=0;
   }
   GoBack(){
     this.CurrentDisplay="MainMenu";

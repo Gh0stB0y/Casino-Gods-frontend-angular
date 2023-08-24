@@ -26,7 +26,7 @@ signIn(){
   this.playerService.signInPlayer(this.signInRequest)
     .subscribe({//jak wszystko bedzie ok
       next: (sign_player)=>{       
-        
+        console.log(sign_player);
         localStorage.setItem('username', sign_player.username);
         localStorage.setItem('bankroll', JSON.stringify(sign_player.bankroll));
         //localStorage.setItem('profit',JSON.stringify(sign_player.profit));
