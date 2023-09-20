@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/61572a24-5e42-42aa-b49c-2de4ac3bc380/resourceGroups/AngularResourceGroup/providers/Microsoft.Web/sites/casinogodsonline",
+    "appService.deploySubpath": "dist/first-app",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}

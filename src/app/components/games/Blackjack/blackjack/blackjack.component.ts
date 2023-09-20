@@ -85,7 +85,7 @@ export class BlackjackComponent implements OnInit,OnDestroy {
       }
       console.log(this.Seats);
       console.log(this.PreGameButtons);
-      
+      //
       this.SignalRService.BettingEnabledListener(
         (IsEnabled:boolean,closedBetsToken:string)=>{
           this.BetsEnabled=IsEnabled;
