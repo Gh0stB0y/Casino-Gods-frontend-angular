@@ -76,3 +76,10 @@ export interface TableConnectionData{
     username:string;
     TableId:string;
 }
+export interface TableSeat
+{
+    Id:number;
+    TransformVal:string;
+    Player:string;
+    Ready:string;
+}

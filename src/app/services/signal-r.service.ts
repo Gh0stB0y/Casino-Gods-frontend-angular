@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import {LobbyTableDataDTO,ChatMessages,LobbyConnectionData} from 'src/app/models/player.model';
+import {LobbyTableDataDTO,ChatMessages,LobbyConnectionData, TableSeat} from 'src/app/models/player.model';
 import { PlayerMenuComponent } from '../components/player-menu/player-menu.component';
 import { single } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
@@ -141,8 +141,18 @@ export class SignalRService {
   public BankrollListener(callback:(NewBankroll:string,Profit:string)=>void){
     this.hubConnection.on("Bankroll",callback);
   }
-
   public DragonTigerCards(callback:(Cards:number[],report:string)=>void){
     this.hubConnection.on("Cards",callback);
   }
+  public async GetAllSeatsStatus(TableId:string):Promise<TableSeat[]>{
+    const result:TableSeat[] = await this.hubConnection?.invoke('GetAllSeatsStatus',TableId);
+    return result;
+  }
+  public async UpdateSeatInfoListener(callback:(updatedSeat:TableSeat)=>void){
+    this.hubConnection.on("UpdateSeatInfo",callback);
+  }
+  public async TakeASeat(tableId:string,jwt:string,seatId:number){
+    await this.hubConnection?.invoke('GetAllSeatsStatus',tableId,jwt,seatId);
+  }
+
 }

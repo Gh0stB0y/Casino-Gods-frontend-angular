@@ -1,60 +1,53 @@
-<!-- <div class="menu-lobby">
-    <div class="playerInfo-lobby">
-      <p class="info">User: {{unameToDisplay}}</p>
-      <p class="info">Bankroll: {{bankrollToDisplay}}</p>  
-      <p class="info">Session profit: {{profitToDipslay}}</p>  
-    </div>
-      
-    <div  class="LobbyDisplay">
-      <div class="chat">
-        <div class="chatMessages" #chatMessages>
-          <div *ngFor="let message of messages" class="message">
-            <span [style.color]="message.textColor">{{ message.text }}</span>
-            <span [style.color]="message.text2Color">{{ message.text2 }}</span>
-          </div>
-        </div>
-        <div class="chatInput">
-        <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message...">
-        <button (click)="sendMessage()">Send</button>
-        </div>
-      </div>
-      
-    </div>
 
+<div class="Background">
 
-    
-
-  </div> -->
+  <div class="return">
+    <div class="BetNow"><button  (click)="SendBets()">Play Now</button></div>
+    <div class="BetsTime"[style.background-color]="BetsbackgroundColor">{{CurrentBetInfo}}</div>    
+    <div class="returnButton"><button  (click)="Return()">Return</button></div>
+  </div>
   
-  <div class="Background">
-    <div class="return">
-      <div class="BetNow"><button  (click)="SendBets()">Play Now</button></div>
-      <div class="ManageChips">       
-        <button (click)="Undo()">Undo</button>
-        <button (click)="Repeat()">Repeat</button>
-        <button (click)="Double()">Double</button>       
-        </div>
-      <div class="returnButton"><button  (click)="Return()">Return</button></div>
-    </div>
+  <div  *ngIf="GameDisplay===false " class="preGameDisplay">
     
-    <div class="Game">
-      <div class="DealerCards">
+    <div class="Blank"></div>
+    <div class="Seats">
+      <div *ngFor="let seat of Seats" class="Seat" [ngStyle]="SeatDynamicValues(seat.TransformVal)">
+        
+        <div *ngIf="PreGameButtons[seat.Id]===0 " class="SeatButton">
+          <button (click)="TakeASeat(seat.Id)" >Take a seat</button>                      
+        </div>  
 
+        <div *ngIf="PreGameButtons[seat.Id]===2 " class="BettingButton">
+          <button class="SideBets"(click)="AddBet(1,seat.Id)" (contextmenu)="SubstractBet(1,seat.Id,$event)"
+                  [style.backgroundImage]="chipImageEnabled[seat.Id*3+1] ? 'url(' + chipImageUrl + ')' : 'none'">
+            <p>Perfect Pairs</p>
+          </button>
+          <button class="MainBet"(click)="AddBet(0,seat.Id)" (contextmenu)="SubstractBet(0,seat.Id,$event)"
+                  [style.backgroundImage]="chipImageEnabled[seat.Id*3] ? 'url(' + chipImageUrl + ')' : 'none'"
+          >{{CurrentBet[seat.Id*3]}}    
+          </button>
+          <button class="SideBets"(click)="AddBet(2,seat.Id)" (contextmenu)="SubstractBet(2,seat.Id,$event)"
+                  [style.backgroundImage]="chipImageEnabled[seat.Id*3+2] ? 'url(' + chipImageUrl + ')' : 'none'">
+            <p>21+3</p>
+          </button>
+        </div>
 
+        <div *ngIf="PreGameButtons[seat.Id]===1 " class="SeatButton">
+          <div class="Dummy"></div>                      
+        </div>  
+
+        <div *ngIf="PreGameButtons[seat.Id]===0" class="PlayerInfo">
+          <p class="PlayerName">{{seat.Player}}</p> 
+          <p class="IsBetPlaced">{{seat.Ready}}</p>
+        </div>  
+        <div *ngIf="PreGameButtons[seat.Id]===2" class="PlayerInfo">
+          <p class="PlayerName">Bet on seat: {{Bets[3*seat.Id]+Bets[3*seat.Id+1]+Bets[3*seat.Id+2]}}</p> 
+        </div>
       </div>
-      <div class="PlayerCards">
-        <div class="Seat1Space"><img src="../../../../../assets/images/cards/10_of_clubs.png" alt="dummy"></div>
-        <div class="Seat2Space"></div>
-        <div class="Seat3Space"></div>
-        <div class="Seat4Space"></div>
-        <div class="Seat5Space"></div>
-        <div class="Seat6Space"></div>
-      </div>
-    </div>  
-      
+    </div>
+
     <div class="ChipsDisplay">
-      <p>Total bet: 10000</p>
-      <div class="Chips">
+      <div class="Chips">      
         <button [class.clicked]="IsClicked[0]" (click)="SwitchCoin(1,0)"><img src="'../../../../../assets/images/chip1_transparent.png" alt="Chip1 Button" /></button>
         <button [class.clicked]="IsClicked[1]" (click)="SwitchCoin(5,1)"><img src="'../../../../../assets/images/chip5_transparent.png" alt="Chip5 Button" /></button>
         <button [class.clicked]="IsClicked[2]" (click)="SwitchCoin(10,2)"><img src="'../../../../../assets/images/chip10_transparent.png" alt="Chip10 Button" /></button>
@@ -64,6 +57,20 @@
         <button [class.clicked]="IsClicked[6]" (click)="SwitchCoin(500,6)"><img src="'../../../../../assets/images/chip500_transparent.png" alt="Chip500 Button" /></button>
         <button [class.clicked]="IsClicked[7]" (click)="SwitchCoin(1000,7)"><img src="'../../../../../assets/images/chip1000_transparent.png" alt="Chip1000 Button" /></button>
       </div>
-      <p></p>
-    </div>    
+      <div class="ManageChips">
+        <p>Total bet: {{TotalBet}}</p>
+        <button (click)="Undo()">Undo</button>
+        <button (click)="Repeat()">Repeat</button>
+        <button (click)="Double()">Double</button>
+        <p></p>
+      </div>
+    </div>
   </div>
+</div>
+
+
+<!-- <div class="Seats">
+  <div *ngFor="let button of SeatButton" class="Seat">
+    <button [ngStyle]="{'transform': 'translateX(' + button + 'px)'}">chuj</button>                
+  </div>
+</div> -->

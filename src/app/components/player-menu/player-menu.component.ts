@@ -77,7 +77,7 @@ export class PlayerMenuComponent implements OnInit,OnDestroy{
 
     for(let i=0;i<6;i++){
       let tableData: TableInfoStrings = {
-        Name: " ",
+        Name: "Loading... ",
         minBet: " ",
         maxBet: " ",
         betTime: " ",

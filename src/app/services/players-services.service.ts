@@ -21,11 +21,9 @@ export class PlayersServicesService {
   }
   signInPlayer(signInRequest:PlayerSignIn):Observable<ActivePlayer>{
     return this.http.post<ActivePlayer>(this.baseApiUrl+'/api/Players/Login',signInRequest);
-    /* DOPISAC FUNKCJE SPRAWDZAJACA CZY KTOS JEST ZALOGOWANY NA TYM KONCIE NA INNYM URZADZENIU I CZY KTOS JEST ZALOGOWANY Z TEGO URZADZENIA */ 
   }
   guest():Observable<ActivePlayer>{
     return this.http.post<ActivePlayer>(this.baseApiUrl+'/api/Players/Guest',"");
-    /* DOPISAC FUNKCJE SPRAWDZAJACA CZY KTOS JEST ZALOGOWANY NA TYM KONCIE NA INNYM URZADZENIU I CZY KTOS JEST ZALOGOWANY Z TEGO URZADZENIA */ 
   }
   recoveryPlayer(recoveryRequest:EmailRec):Observable<string>{
     return this.http.put<string>(this.baseApiUrl+'/api/Players/Recovery',recoveryRequest);

@@ -4,11 +4,9 @@ import { AppComponent } from 'src/app/app.component';
 import { AppModule } from 'src/app/app.module';
 import { ChatMessages } from 'src/app/models/player.model';
 import { PlayersServicesService } from 'src/app/services/players-services.service';
-import { TableServiceService } from 'src/app/services/table-service.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { PlayerMenuComponent } from 'src/app/components/player-menu/player-menu.component';
 import { HttpClient } from '@angular/common/http';
-import { delay } from 'rxjs';
 @Component({
   selector: 'app-roulette',
   templateUrl: './roulette.component.html',
