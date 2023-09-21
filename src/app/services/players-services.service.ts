@@ -10,7 +10,7 @@ import {ActivePlayer,EmailRec, jwt,Player, PlayerSignIn, PlayerSignUp,TableData 
   providedIn: 'root'
 })
 export class PlayersServicesService {
-    baseApiUrl: string='https://localhost:7267';
+    baseApiUrl: string='https://casinogodsserver.azurewebsites.net';
   constructor(private http: HttpClient) { }
 
   getAllPlayers(): Observable<Player[]>{
