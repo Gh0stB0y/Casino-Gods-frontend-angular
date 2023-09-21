@@ -13,16 +13,16 @@ import { BlackjackComponent } from './components/games/Blackjack/blackjack/black
 
 const routes: Routes = [
   {path:'',redirectTo: 'login',pathMatch:'full'},
-  {path:'/players',component:PlayersListComponent},
-  {path:'/players/add',component:AddPlayerComponent},
-  {path:'/login',component:LoginMenuComponent},
-  {path:'/signin',component:SignInPlayerComponent},
-  {path:'/recovery',component:RecoveryComponent},
-  {path:'/playerMenu',component:PlayerMenuComponent},
-  {path:'/Bacarrat',component:BacarratComponent},
-  {path:'/Blackjack',component:BlackjackComponent},
-  {path:'/Roulette',component:RouletteComponent},
-  {path:'/War',component:WarComponent}
+  {path:'players',component:PlayersListComponent},
+  {path:'players/add',component:AddPlayerComponent},
+  {path:'login',component:LoginMenuComponent},
+  {path:'signin',component:SignInPlayerComponent},
+  {path:'recovery',component:RecoveryComponent},
+  {path:'playerMenu',component:PlayerMenuComponent},
+  {path:'Bacarrat',component:BacarratComponent},
+  {path:'Blackjack',component:BlackjackComponent},
+  {path:'Roulette',component:RouletteComponent},
+  {path:'War',component:WarComponent}
 ];
 
 @NgModule({
