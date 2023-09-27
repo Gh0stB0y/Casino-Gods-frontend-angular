@@ -27,13 +27,7 @@ export class AppComponent {
     
   }
   @HostListener('window:load', ['$event'])
-    onWindowLoad(event: Event) {
-      const docElement = document.documentElement;
-  
-      if (docElement.requestFullscreen) {
-        docElement.requestFullscreen();
-      }
-    }
+    
   ToggleWrapperWidth(){
   this.WideWrapper=!this.WideWrapper;
   }

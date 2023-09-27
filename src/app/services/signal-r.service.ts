@@ -12,11 +12,11 @@ import { Route, Router } from '@angular/router';
 export class SignalRService {
   
   public ConnectionData:LobbyConnectionData={jwt:"",username:""};
-  private UrlArray:string[]=['https://https://casinogodsserver.azurewebsites.net/BacarratLobby',
-                              'https://https://casinogodsserver.azurewebsites.net/BlackJackLobby',
-                              'https://https://casinogodsserver.azurewebsites.net/DragonTigerLobby',
-                              'https://https://casinogodsserver.azurewebsites.net/RouletteLobby',
-                              'https://https://casinogodsserver.azurewebsites.net/WarLobby'];
+  private UrlArray:string[]=['https://casinogodsserver.azurewebsites.net/BacarratLobby',
+                              'https://casinogodsserver.azurewebsites.net/BlackJackLobby',
+                              'https://casinogodsserver.azurewebsites.net/DragonTigerLobby',
+                              'https://casinogodsserver.azurewebsites.net/RouletteLobby',
+                              'https://casinogodsserver.azurewebsites.net/WarLobby'];
     
   private gameType:string[]=["Bacarrat","Blackjack","Dragon Tiger","Roulette","War"];
   private newMap=new Map<string,string>();
