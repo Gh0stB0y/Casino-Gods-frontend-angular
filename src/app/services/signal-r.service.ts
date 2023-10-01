@@ -38,7 +38,12 @@ export class SignalRService {
     else{localStorage.clear();this.router.navigate(['login']);}
     const hubUrl = this.newMap.get(gameType)+`?param1=${encodeURIComponent(this.StartConnectionData.jwt)}&param2=${encodeURIComponent(this.StartConnectionData.username)}`;
     
-    this.hubConnection=new signalR.HubConnectionBuilder().withUrl(hubUrl).withAutomaticReconnect().build();
+    this.hubConnection=new signalR.HubConnectionBuilder().withUrl(hubUrl,
+                                                          {
+                                                            skipNegotiation:true,
+                                                            transport: signalR.HttpTransportType.WebSockets
+                                                          })
+                                                          .build();
     if(this.hubConnection!=undefined){
       this.hubConnection?.start()
       .then(() => {
